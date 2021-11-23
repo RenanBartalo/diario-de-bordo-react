@@ -44,7 +44,7 @@ const Login = ({ loginUser }) => {
 
   return (
     <TemplatePublic>
-      <h2 className="login-title">Iron Projects Manager</h2>
+      <h2 className="login-title"Diario de Bordo</h2>
 
       <p className="login-text">Login into your account</p>
 
