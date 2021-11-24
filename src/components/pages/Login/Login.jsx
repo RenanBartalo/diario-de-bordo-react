@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import FileBase from 'react-file-base64';
-
 import { Form, Col, Button } from 'react-bootstrap';
 
 import TemplatePublic from '../../templates/TemplatePublic/TemplatePublic';
@@ -80,14 +78,8 @@ const Login = ({ loginUser }) => {
           <Form.Control.Feedback>Ok!</Form.Control.Feedback>
           <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
         </Form.Group>
-        <Form.Group as={Col} md="12" controlId="login-form">
-          <Form.Label>Add File</Form.Label>
-          <div><FileBase type="file" multiple={false} onDone={handleChange} /></div>
-          <Form.Control.Feedback>Ok!</Form.Control.Feedback>
-          <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
-        </Form.Group>
 
-        <Button type="submit" size="lg" className="login-submit-button">Login</Button>
+<Button type="submit" size="lg" className="login-submit-button">Login</Button>
       </Form>
 
     </TemplatePublic>
