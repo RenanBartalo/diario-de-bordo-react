@@ -5,9 +5,6 @@ import './TemplatePublic.css';
 
 const TemplatePublic = ({ children }) => (
   <div className="template-public-container">
-    <div className="template-public-background">
-      <h1>Iron Projects</h1>
-    </div>
     <div className="template-public-content">
       {children}
     </div>
