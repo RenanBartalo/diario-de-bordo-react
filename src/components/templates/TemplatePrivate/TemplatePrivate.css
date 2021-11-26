@@ -3,12 +3,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 100px;
-  height: 150px;
-  background-color: #000fff;
+  border-bottom: thin solid #E5E5E5;
 }
 
 .template-private-navbar a {
-  color: #fff;
+  color: #000000;
   text-decoration: none;
   font-size: 22px;
 }
