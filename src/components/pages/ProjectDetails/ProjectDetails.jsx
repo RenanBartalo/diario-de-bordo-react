@@ -28,6 +28,8 @@ const MyProjects = () => {
   const pegaUmProjetoPeloIdDaAPI = async () => {
     try {
       const token = localStorage.getItem('token');
+      const user = localStorage.getItem('user');
+      console.log(user);
       const foundProject = await getOneProject(projectId, token);
       setProject(foundProject);
     } catch (error) {
@@ -45,6 +47,8 @@ const MyProjects = () => {
   useEffect(() => {
     pegaUmProjetoPeloIdDaAPI();
   }, []);
+
+  console.log(project);
 
   const {
     values, errors, touched, handleChange, handleBlur, handleSubmit, setTouched, setValues,
