@@ -12,9 +12,9 @@ import { register, login } from '../../../services/api';
 import './Register.css';
 
 const registerSchema = yup.object().shape({
-  name: yup.string().required('Required Field').min(3, 'Minimum of 3 characters').max(100, 'Maximum of 100 characters'),
-  email: yup.string().required('Required Field').email('Must have email format'),
-  password: yup.string().required('Required Field').max(150, 'Maximum of 150 characters'),
+  name: yup.string().required('Campo obrigatório').min(3, 'Minimum of 3 characters').max(100, 'Maximum of 100 characters'),
+  email: yup.string().required('Campo obrigatório').email('Must have email format'),
+  password: yup.string().required('Campo obrigatório').max(150, 'Maximum of 150 characters'),
 });
 
 const Register = () => {
@@ -44,58 +44,63 @@ const Register = () => {
 
   return (
     <TemplatePublic>
-      <h2 className="register-title">Iron Projects Manager</h2>
+      <div className="container container-public">
+        <div className="row h-100 d-flex justify-content-center align-items-center">
+          <div className="col-6 p-4 register-container">
+            <h2 className="mt-0 text-center">Bem-vindo ao diário de bordo</h2>
+            <p className="text-center">Cadastre-se e comece a sua jornada</p>
+            <hr />
+            <Form onSubmit={handleSubmit}>
+              <Form.Group as={Col} md="12" controlId="register-form" className="pt-3">
+                <Form.Control
+                  placeholder="Nome"
+                  type="text"
+                  name="name"
+                  value={values.name}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isValid={touched.name && !errors.name}
+                  isInvalid={touched.name && errors.name}
+                />
+                <Form.Control.Feedback>Ok!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
+              </Form.Group>
 
-      <p className="register-text">Create a new account</p>
+              <Form.Group as={Col} md="12" controlId="register-form" className="pt-3">
+                <Form.Control
+                  placeholder="E-mail"
+                  type="text"
+                  name="email"
+                  value={values.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isValid={touched.email && !errors.email}
+                  isInvalid={touched.email && errors.email}
+                />
+                <Form.Control.Feedback>Ok!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
+              </Form.Group>
 
-      <Form onSubmit={handleSubmit}>
-        <Form.Group as={Col} md="12" controlId="register-form">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type="text"
-            name="name"
-            value={values.name}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            isValid={touched.name && !errors.name}
-            isInvalid={touched.name && errors.name}
-          />
-          <Form.Control.Feedback>Ok!</Form.Control.Feedback>
-          <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
-        </Form.Group>
+              <Form.Group as={Col} md="12" controlId="register-form" className="pt-3">
+                <Form.Control
+                  placeholder="Senha"
+                  type="password"
+                  name="password"
+                  value={values.password}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isValid={touched.password && !errors.password}
+                  isInvalid={touched.password && errors.password}
+                />
+                <Form.Control.Feedback>Ok!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+              </Form.Group>
 
-        <Form.Group as={Col} md="12" controlId="register-form">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="text"
-            name="email"
-            value={values.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            isValid={touched.email && !errors.email}
-            isInvalid={touched.email && errors.email}
-          />
-          <Form.Control.Feedback>Ok!</Form.Control.Feedback>
-          <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
-        </Form.Group>
-
-        <Form.Group as={Col} md="12" controlId="register-form">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            name="password"
-            value={values.password}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            isValid={touched.password && !errors.password}
-            isInvalid={touched.password && errors.password}
-          />
-          <Form.Control.Feedback>Ok!</Form.Control.Feedback>
-          <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
-        </Form.Group>
-
-        <Button type="submit" size="lg" className="register-submit-button">Register</Button>
-      </Form>
+              <Button type="submit" size="lg" className="register-submit-button">Cadastrar</Button>
+            </Form>
+          </div>
+        </div>
+      </div>
 
     </TemplatePublic>
   );
