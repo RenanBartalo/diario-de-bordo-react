@@ -1,9 +1,13 @@
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable no-console */
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 import './navbar.css';
 
 const NavBar = (props) => {
+console.log(props);
+const { name, roteiros } = props;
   return (
     <nav className="py-3">
       <div className="container">
@@ -12,9 +16,9 @@ const NavBar = (props) => {
             <div className="d-flex align-items-center">
               <div className="user-picture" />
               <div className="user-info">
-                <span className="name">Fulano</span>
+                <span className="name">{ name }</span>
                 <br />
-                0 roteiros
+                {' '}{ roteiros }{' '}roteiros
               </div>
             </div>
             <div>

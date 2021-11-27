@@ -8,7 +8,7 @@ import { Form, Col } from 'react-bootstrap';
 import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
 import Toast from '../../miscelaneous/Toast/Toast';
 
-import { getProjects } from '../../../services/api';
+import { getTravels } from '../../../services/api';
 
 import './MyProjects.css';
 
@@ -16,16 +16,17 @@ const MyProjects = () => {
   const [show, setShow] = useState(false);
   const [projects, setProjects] = useState([]);
   const [searchTitle, setSearchTitle] = useState('');
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState([]);
 
-  console.log(user);
   const getProjectsByTitle = async () => {
     try {
       const token = localStorage.getItem('token');
-      const foundProjects = await getProjects(searchTitle, token); // Se der algum erro com status DIFERENTE de 401, vai cair no catch abaixo
+      const foundProjects = await getTravels(searchTitle, token); // Se der algum erro com status DIFERENTE de 401, vai cair no catch abaixo
 
-      setProjects(foundProjects.projects);
-      setUser(foundProjects.theuser.name);
+      setProjects(foundProjects.travels);
+      const userX = foundProjects.user.name;
+      const roteiros = foundProjects.travels.length;
+      setUser([userX, roteiros]);
     } catch (error) {
       setShow(true);
     }
@@ -42,7 +43,7 @@ const MyProjects = () => {
   // OU quando a variavel searchTitle é atualizada
 
   return (
-    <TemplatePrivate>
+    <TemplatePrivate props={user}>
       <Form.Group as={Col} md="12" controlId="login-form">
         <Form.Control
           type="text"
@@ -53,10 +54,9 @@ const MyProjects = () => {
       </Form.Group>
       {user}
       <div className="projects-container">
-        {projects.map((project) => (
-          <Link className="project-card" key={project._id} to={`/my-projects/${project._id}`}>
-            <p>{project.title}</p>
-            <p>{project.owner.name}</p>
+        {projects.map((travel) => (
+          <Link className="project-card" key={travel._id} to={`/my-travels/${travel._id}`}>
+            <p>{travel.cidade}</p>
           </Link>
         ))}
       </div>

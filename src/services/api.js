@@ -32,26 +32,26 @@ export const register = async (formData) => {
   return response.data;
 };
 
-export const getProjects = async (searchTitle, token) => {
-  const response = await api.get(`/projects?title=${searchTitle}`, setHeaders(token));
+export const getTravels = async (searchTitle, token) => {
+  const response = await api.get(`/travels?title=${searchTitle}`, setHeaders(token));
 
   return response.data;
 };
 
-export const getOneProject = async (projectId, token) => {
-  const response = await api.get(`/projects/${projectId}`, setHeaders(token));
+export const getOneTravel = async (travelId, token) => {
+  const response = await api.get(`/travels/${travelId}`, setHeaders(token));
 
   return response.data;
 };
 
-export const createOneProject = async (body, token) => {
-  const response = await api.post('/projects', body, setHeaders(token));
+export const createOneTravel = async (body, token) => {
+  const response = await api.post('/travels', body, setHeaders(token));
 
   return response.data;
 };
 
-export const createOneTask = async (projectId, body, token) => {
-  const response = await api.post(`/tasks/${projectId}`, body, setHeaders(token));
+export const createOneDay = async (travelId, body, token) => {
+  const response = await api.post(`/days/${travelId}`, body, setHeaders(token));
 
   return response.data;
 };
