@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 
@@ -15,13 +16,16 @@ const MyProjects = () => {
   const [show, setShow] = useState(false);
   const [projects, setProjects] = useState([]);
   const [searchTitle, setSearchTitle] = useState('');
+  const [user, setUser] = useState('');
 
+  console.log(user);
   const getProjectsByTitle = async () => {
     try {
       const token = localStorage.getItem('token');
       const foundProjects = await getProjects(searchTitle, token); // Se der algum erro com status DIFERENTE de 401, vai cair no catch abaixo
 
-      setProjects(foundProjects);
+      setProjects(foundProjects.projects);
+      setUser(foundProjects.theuser.name);
     } catch (error) {
       setShow(true);
     }
@@ -47,11 +51,12 @@ const MyProjects = () => {
           onChange={handleChange}
         />
       </Form.Group>
-
+      {user}
       <div className="projects-container">
         {projects.map((project) => (
           <Link className="project-card" key={project._id} to={`/my-projects/${project._id}`}>
             <p>{project.title}</p>
+            <p>{project.owner.name}</p>
           </Link>
         ))}
       </div>
