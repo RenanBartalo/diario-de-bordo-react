@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 
 import { Form, Button } from 'react-bootstrap';
@@ -9,7 +9,17 @@ const NewTripButton = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [formStep, SetFormStep] = useState(0);
+  const handleSubmit = event => {
+    event.preventDefault();
+  };
+
+  const [formStep, setFormStep] = useState(0);
+
+  useEffect(() => {
+    setTimeout(() => {setFormStep(0)}, 500)
+  }, [show]);
+  
+  console.log(handleClose)
   return (
     <div>
       <button type="button" onClick={handleShow} className="new-trip-button">
@@ -20,7 +30,7 @@ const NewTripButton = () => {
           <Modal.Title>Adicione sua viagem</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             {formStep === 0 && (
             <section>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -49,7 +59,10 @@ const NewTripButton = () => {
                 <Form.Control type="file" />
               </Form.Group>
             </section>)}
-            {formStep < 3 ? <Button type="button" size="lg" onClick={() => SetFormStep(formStep + 1)} className="register-submit-button">Próximo passo</Button> : <Button type="submit" size="lg" onClick={() => SetFormStep(formStep + 1)} className="register-submit-button">Submit</Button>}
+            {formStep < 3
+              ? <Button type="button" size="lg" onClick={() => setFormStep(formStep + 1)} className="register-submit-button">Próximo passo</Button>
+              : <Button type="submit" size="lg" className="register-submit-button">Enviar</Button>
+            }
           </Form>
         </Modal.Body>
       </Modal>
