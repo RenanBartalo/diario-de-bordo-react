@@ -1,0 +1,24 @@
+nav {
+    border-bottom: thin solid #E5E5E5;
+}
+
+.logout {
+    text-decoration: none;
+}
+
+.user-picture {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    background-color: #e5e5e5;
+}
+
+.user-info {
+    padding-left: 20px;
+}
+
+.name {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+}
