@@ -31,7 +31,7 @@ const NewTripButton = () => {
             {formStep === 1 && (
             <section>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Label>Adicione uma descrição</Form.Label>
+                <Form.Label>Quais os dias?</Form.Label>
                 <Form.Control as="textarea" rows={3} />
               </Form.Group>
             </section>)}
@@ -42,7 +42,14 @@ const NewTripButton = () => {
                 <Form.Control as="textarea" rows={3} />
               </Form.Group>
             </section>)}
-            <Button type="button" size="lg" onClick={() => SetFormStep(formStep + 1)} className="register-submit-button">Próximo passo</Button>
+            {formStep === 3 && (
+            <section>
+              <Form.Group controlId="formFile" className="mb-3">
+                <Form.Label>Adicione uma foto</Form.Label>
+                <Form.Control type="file" />
+              </Form.Group>
+            </section>)}
+            {formStep < 3 ? <Button type="button" size="lg" onClick={() => SetFormStep(formStep + 1)} className="register-submit-button">Próximo passo</Button> : <Button type="submit" size="lg" onClick={() => SetFormStep(formStep + 1)} className="register-submit-button">Submit</Button>}
           </Form>
         </Modal.Body>
       </Modal>
