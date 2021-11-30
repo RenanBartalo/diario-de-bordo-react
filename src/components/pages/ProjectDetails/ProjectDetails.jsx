@@ -11,7 +11,7 @@ import {
 
 import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
 
-import { getOneProject, createOneTask } from '../../../services/api';
+import { getOneTravel, createOneDay } from '../../../services/api';
 import './ProjectDetails.css';
 
 const schema = yup.object().shape({
@@ -28,7 +28,9 @@ const MyProjects = () => {
   const pegaUmProjetoPeloIdDaAPI = async () => {
     try {
       const token = localStorage.getItem('token');
-      const foundProject = await getOneProject(projectId, token);
+      const user = localStorage.getItem('user');
+      console.log(user);
+      const foundProject = await getOneTravel(projectId, token);
       setProject(foundProject);
     } catch (error) {
       console.log(error);
@@ -46,6 +48,8 @@ const MyProjects = () => {
     pegaUmProjetoPeloIdDaAPI();
   }, []);
 
+  console.log(project);
+
   const {
     values, errors, touched, handleChange, handleBlur, handleSubmit, setTouched, setValues,
   } = useFormik({
@@ -53,7 +57,7 @@ const MyProjects = () => {
     validationSchema: schema,
     onSubmit: async (formData) => {
       const token = localStorage.getItem('token');
-      await createOneTask(projectId, formData, token);
+      await createOneDay(projectId, formData, token);
 
       await pegaUmProjetoPeloIdDaAPI();
 

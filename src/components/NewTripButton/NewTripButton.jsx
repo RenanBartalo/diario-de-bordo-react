@@ -9,6 +9,9 @@ const NewTripButton = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleChange = async (e) => {
+    console.log(e.target.value);
+  };
   const handleSubmit = event => {
     event.preventDefault();
   };
@@ -35,28 +38,47 @@ const NewTripButton = () => {
             <section>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>Qual o destino?</Form.Label>
-                <Form.Control type="email" placeholder="name@example.com" />
+                <Form.Control
+                type="text"
+                name=""
+                placeholder="ex. Paris"
+                onChange={handleChange}
+                />
               </Form.Group>
             </section>)}
             {formStep === 1 && (
             <section>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Label>Quais os dias?</Form.Label>
-                <Form.Control as="textarea" rows={3} />
+                <Form.Label>Data inicial</Form.Label>
+                <Form.Control
+                type="date"
+                onChange={handleChange}
+                />
+                <Form.Label className="mt-3">Data final</Form.Label>
+                <Form.Control
+                onChange={handleChange}
+                type="date" />
               </Form.Group>
             </section>)}
             {formStep === 2 && (
             <section>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                 <Form.Label>Adicione uma descrição</Form.Label>
-                <Form.Control as="textarea" rows={3} />
+                <Form.Control
+                as="textarea"
+                rows={3}
+                onChange={handleChange}
+                />
               </Form.Group>
             </section>)}
             {formStep === 3 && (
             <section>
               <Form.Group controlId="formFile" className="mb-3">
                 <Form.Label>Adicione uma foto</Form.Label>
-                <Form.Control type="file" />
+                <Form.Control
+                type="file"
+                onChange={handleChange}
+                />
               </Form.Group>
             </section>)}
             {formStep < 3

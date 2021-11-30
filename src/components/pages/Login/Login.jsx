@@ -32,7 +32,7 @@ const Login = ({ loginUser }) => {
 
         loginUser(); // Atualizar o isUserLogged do APP para TRUE
 
-        navigate('/my-projects');
+        navigate('/my-travels');
       } catch (error) {
         setErrors({
           email: error.response.data.error,
