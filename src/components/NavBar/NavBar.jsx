@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 import './navbar.css';
 
 const NavBar = (props) => {
-console.log(props);
-const { name, roteiros } = props;
+  console.log(props);
+  const { name, roteiros } = props;
   return (
     <nav className="py-3">
       <div className="container">
