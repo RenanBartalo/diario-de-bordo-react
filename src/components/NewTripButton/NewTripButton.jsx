@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import * as yup from 'yup';
 
 import { Form, Button } from 'react-bootstrap';
 
@@ -40,11 +41,11 @@ const NewTripButton = () => {
                 <Form.Label>Qual o destino?</Form.Label>
                 <Form.Control
                 type="text"
-                name=""
                 placeholder="ex. Paris"
                 onChange={handleChange}
                 />
               </Form.Group>
+              <Button type="button" size="lg" onClick={() => setFormStep(formStep + 1)} className="register-submit-button">Próximo passo</Button>
             </section>)}
             {formStep === 1 && (
             <section>
@@ -53,12 +54,16 @@ const NewTripButton = () => {
                 <Form.Control
                 type="date"
                 onChange={handleChange}
+                min="2021-10-30"
+                max="2099-12-31"
                 />
                 <Form.Label className="mt-3">Data final</Form.Label>
                 <Form.Control
                 onChange={handleChange}
+                max="2099-12-31"
                 type="date" />
               </Form.Group>
+              <Button type="button" size="lg" onClick={() => setFormStep(formStep + 1)} className="register-submit-button">Próximo passo</Button>
             </section>)}
             {formStep === 2 && (
             <section>
@@ -70,6 +75,7 @@ const NewTripButton = () => {
                 onChange={handleChange}
                 />
               </Form.Group>
+              <Button type="button" size="lg" onClick={() => setFormStep(formStep + 1)} className="register-submit-button">Próximo passo</Button>
             </section>)}
             {formStep === 3 && (
             <section>
@@ -82,9 +88,8 @@ const NewTripButton = () => {
               </Form.Group>
             </section>)}
             {formStep < 3
-              ? <Button type="button" size="lg" onClick={() => setFormStep(formStep + 1)} className="register-submit-button">Próximo passo</Button>
-              : <Button type="submit" size="lg" className="register-submit-button">Enviar</Button>
-            }
+              ? undefined
+              : <Button type="submit" size="lg" className="register-submit-button">Enviar</Button> }
           </Form>
         </Modal.Body>
       </Modal>
