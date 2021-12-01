@@ -52,7 +52,10 @@ const MyProjects = () => {
           onChange={handleChange}
         />
       </Form.Group>
+<<<<<<< HEAD
       {user}
+=======
+>>>>>>> cda6f984c0aebaa059d99b114e78416691f58fad
       <div className="projects-container">
         {projects.map((travel) => (
           <Link className="project-card" key={travel._id} to={`/my-travels/${travel._id}`}>
