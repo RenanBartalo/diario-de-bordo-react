@@ -8,11 +8,9 @@ import ItinerariesHeader from '../../ItinerariesHeader/ItinerariesHeader';
 import './TemplatePrivate.css';
 
 const TemplatePrivate = ({ children, user }) => {
-  console.log(user);
-
   return (
     <div>
-      <NavBar name="{user.name}" roteiros="{user.roteiros}" />
+      <NavBar name={user.name} roteiros={user.roteiros} />
       <ItinerariesHeader />
       <div className="template-private-content">
         { children }

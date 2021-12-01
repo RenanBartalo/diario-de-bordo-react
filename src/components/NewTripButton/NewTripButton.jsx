@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /* eslint-disable no-console */
 import { React, useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
@@ -7,12 +6,43 @@ import * as yup from 'yup';
 
 import { Form, Button } from 'react-bootstrap';
 
+import { createOneTravel } from '../../services/api';
+
 import './new-trip-button.css';
 
 const NewTripButton = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [travel, setTravel] = useState({
+    cidade: '',
+    initialDate: '',
+    finalDate: '',
+    travelDecription: '',
+    coverPicture: '',
+  });
+
+  const handleInputTravel = (e) => {
+    e.preventDefault();
+    const which = e.target.name;
+    const value = { ...e.target.value };
+    setTravel({ ...travel, [which]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem('token');
+      const body = travel;
+      console.log('chamou o submit');
+      console.log(body);
+      await createOneTravel(body, token);
+
+      handleClose();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const [formStep, setFormStep] = useState(0);
 
@@ -23,7 +53,7 @@ const NewTripButton = () => {
   }, [show]);
 
   const newTripSchema = yup.object().shape({
-    destination: yup
+    cidade: yup
       .string()
       .required('Campo obrigatório')
       .min(3, 'Minimum of 3 characters')
@@ -54,31 +84,27 @@ const NewTripButton = () => {
     values,
     touched,
     errors,
-    handleChange,
     handleBlur,
-    handleSubmit,
     setErrors,
   } = useFormik({
     initialValues: {
-      destination: '',
+      cidade: '',
       initialDate: '',
       finalDate: '',
       travelDecription: '',
       coverPicture: '',
     },
     validationSchema: newTripSchema,
-    onSubmit: async (formData) => {
+    onSubmit: async () => {
       try {
-        // eslint-disable-next-line no-undef
-        await register(formData);
-
-        // const tokenResponse = await login({ email: formData.email, password: formData.password });
-        localStorage.getItem('token');
+        const token = localStorage.getItem('token');
+        const body = travel;
+        await createOneTravel(body, token);
 
         handleClose();
       } catch (error) {
         setErrors({
-          destination: error.response.data.error,
+          cidade: error.response.data.error,
         });
       }
     },
@@ -103,17 +129,16 @@ const NewTripButton = () => {
                 >
                   <Form.Label>Qual o destino?</Form.Label>
                   <Form.Control
-                    name="destination"
-                    value={values.destination}
-                    onChange={handleChange}
+                    name="cidade"
+                    onChange={handleInputTravel}
                     onBlur={handleBlur}
-                    isValid={touched.destination && !errors.destination}
-                    isInvalid={touched.destination && errors.destination}
+                    isValid={touched.cidade && !errors.cidade}
+                    isInvalid={touched.cidade && errors.cidade}
                     type="text"
                     placeholder="ex. Paris"
                   />
                   <Form.Control.Feedback type="invalid">
-                    {errors.destination}
+                    {errors.cidade}
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Button
@@ -132,8 +157,7 @@ const NewTripButton = () => {
                   <Form.Label>Data inicial</Form.Label>
                   <Form.Control
                     name="initialDate"
-                    value={values.initialDate}
-                    onChange={handleChange}
+                    onChange={handleInputTravel}
                     onBlur={handleBlur}
                     isValid={touched.initialDate && !errors.initialDate}
                     isInvalid={touched.initialDate && errors.initialDate}
@@ -148,8 +172,7 @@ const NewTripButton = () => {
                   <Form.Label className="mt-3">Data final</Form.Label>
                   <Form.Control
                     name="finalDate"
-                    value={values.finalDate}
-                    onChange={handleChange}
+                    onChange={handleInputTravel}
                     onBlur={handleBlur}
                     isValid={touched.finalDate && !errors.finalDate}
                     isInvalid={touched.finalDate && errors.finalDate}
@@ -176,8 +199,7 @@ const NewTripButton = () => {
                   <Form.Label>Adicione uma descrição</Form.Label>
                   <Form.Control
                     name="travelDecription"
-                    value={values.travelDecription}
-                    onChange={handleChange}
+                    onChange={handleInputTravel}
                     onBlur={handleBlur}
                     isValid={
                       touched.travelDecription && !errors.travelDecription
@@ -209,7 +231,7 @@ const NewTripButton = () => {
                   <Form.Control
                     name="coverPicture"
                     value={values.coverPicture}
-                    onChange={handleChange}
+                    onChange={handleInputTravel}
                     onBlur={handleBlur}
                     isValid={touched.coverPicture && !errors.coverPicture}
                     isInvalid={touched.coverPicture && errors.coverPicture}

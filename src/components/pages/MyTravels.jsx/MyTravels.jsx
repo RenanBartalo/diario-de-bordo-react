@@ -10,9 +10,9 @@ import Toast from '../../miscelaneous/Toast/Toast';
 
 import { getTravels } from '../../../services/api';
 
-import './MyProjects.css';
+import './MyTravels.css';
 
-const MyProjects = ({ setUser, user }) => {
+const MyTravels = ({ setUser, user }) => {
   const [show, setShow] = useState(false);
   const [projects, setProjects] = useState([]);
   const [searchTitle, setSearchTitle] = useState('');
@@ -26,7 +26,6 @@ const MyProjects = ({ setUser, user }) => {
       const userX = foundProjects.user.name;
       const roteirosX = foundProjects.travels.length;
       setUser({ ...user, name: userX, roteiros: roteirosX });
-      console.log(user);
     } catch (error) {
       setShow(true);
     }
@@ -74,4 +73,4 @@ const MyProjects = ({ setUser, user }) => {
   );
 };
 
-export default MyProjects;
+export default MyTravels;

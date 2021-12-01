@@ -6,11 +6,8 @@ import './App.css';
 import Login from './components/pages/Login/Login';
 import Register from './components/pages/Register/Register';
 
-import MyProjects from './components/pages/MyProjects/MyProjects';
-import ProjectDetails from './components/pages/ProjectDetails/ProjectDetails';
-
-import NavBar from './components/NavBar/NavBar';
-import TemplatePrivate from './components/templates/TemplatePrivate/TemplatePrivate';
+import MyTravels from './components/pages/MyTravels.jsx/MyTravels';
+import TravelDetails from './components/pages/TravelDetails/TravelDetails';
 
 import ProtectedRoute from './components/miscelaneous/ProtectedRoute/ProtectedRoute';
 
@@ -25,7 +22,7 @@ const App = () => {
 
   const [user, setUser] = useState({
     name: '',
-    roteiros: 0,
+    roteiros: '0',
   });
 
   const loginUser = () => {
@@ -42,7 +39,7 @@ const App = () => {
         element={(
           <ProtectedRoute
             isLogged={isUserLogged}
-            Page={MyProjects}
+            Page={MyTravels}
             setUser={setUser}
             user={user}
           />
@@ -51,7 +48,7 @@ const App = () => {
 
       <Route
         path="/my-travels/:travelId"
-        element={<ProtectedRoute isLogged={isUserLogged} Page={ProjectDetails} user={user} />}
+        element={<ProtectedRoute isLogged={isUserLogged} Page={TravelDetails} user={user} />}
       />
     </Routes>
   );

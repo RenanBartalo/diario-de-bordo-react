@@ -5,11 +5,9 @@ import { Link } from 'react-router-dom';
 
 import './navbar.css';
 
-const NavBar = (props) => {
-  console.log(props);
-
-  const userX = 'NoName';
-  const roteiroX = '000';
+const NavBar = ({ ...props }) => {
+  const theName = props.name;
+  const theNumber = props.roteiros;
 
   return (
     <nav className="py-3">
@@ -19,9 +17,9 @@ const NavBar = (props) => {
             <div className="d-flex align-items-center">
               <div className="user-picture" />
               <div className="user-info">
-                <span className="name">{ userX }</span>
+                <span className="name">{ theName }</span>
                 <br />
-                {' '}{ roteiroX }{' '}roteiros
+                {' '}{ theNumber }{' '}roteiros
               </div>
             </div>
             <div>
