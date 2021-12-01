@@ -12,21 +12,21 @@ import { getTravels } from '../../../services/api';
 
 import './MyProjects.css';
 
-const MyProjects = () => {
+const MyProjects = ({ setUser, user }) => {
   const [show, setShow] = useState(false);
   const [projects, setProjects] = useState([]);
   const [searchTitle, setSearchTitle] = useState('');
-  const [user, setUser] = useState([]);
 
   const getProjectsByTitle = async () => {
     try {
       const token = localStorage.getItem('token');
-      const foundProjects = await getTravels(searchTitle, token); // Se der algum erro com status DIFERENTE de 401, vai cair no catch abaixo
+      const foundProjects = await getTravels(searchTitle, token);
 
       setProjects(foundProjects.travels);
       const userX = foundProjects.user.name;
-      const roteiros = foundProjects.travels.length;
-      setUser([userX, roteiros]);
+      const roteirosX = foundProjects.travels.length;
+      setUser({ ...user, name: userX, roteiros: roteirosX });
+      console.log(user);
     } catch (error) {
       setShow(true);
     }
@@ -43,7 +43,7 @@ const MyProjects = () => {
   // OU quando a variavel searchTitle é atualizada
 
   return (
-    <TemplatePrivate props={user}>
+    <TemplatePrivate user={user}>
       <Form.Group as={Col} md="12" controlId="login-form">
         <Form.Control
           type="text"
@@ -52,13 +52,13 @@ const MyProjects = () => {
           onChange={handleChange}
         />
       </Form.Group>
-<<<<<<< HEAD
-      {user}
-=======
->>>>>>> cda6f984c0aebaa059d99b114e78416691f58fad
       <div className="projects-container">
         {projects.map((travel) => (
-          <Link className="project-card" key={travel._id} to={`/my-travels/${travel._id}`}>
+          <Link
+            className="project-card"
+            key={travel._id}
+            to={`/my-travels/${travel._id}`}
+          >
             <p>{travel.cidade}</p>
           </Link>
         ))}

@@ -23,6 +23,11 @@ const App = () => {
 
   const [isUserLogged, setIsUserLogged] = useState(verifyLoggedUser());
 
+  const [user, setUser] = useState({
+    name: '',
+    roteiros: 0,
+  });
+
   const loginUser = () => {
     setIsUserLogged(true);
   };
@@ -34,12 +39,19 @@ const App = () => {
 
       <Route
         path="/my-travels"
-        element={<ProtectedRoute isLogged={isUserLogged} Page={MyProjects} />}
+        element={(
+          <ProtectedRoute
+            isLogged={isUserLogged}
+            Page={MyProjects}
+            setUser={setUser}
+            user={user}
+          />
+)}
       />
 
       <Route
         path="/my-travels/:travelId"
-        element={<ProtectedRoute isLogged={isUserLogged} Page={ProjectDetails} />}
+        element={<ProtectedRoute isLogged={isUserLogged} Page={ProjectDetails} user={user} />}
       />
     </Routes>
   );

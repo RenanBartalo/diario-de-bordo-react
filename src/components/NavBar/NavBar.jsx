@@ -7,7 +7,10 @@ import './navbar.css';
 
 const NavBar = (props) => {
   console.log(props);
-  const { name, roteiros } = props;
+
+  const userX = 'NoName';
+  const roteiroX = '000';
+
   return (
     <nav className="py-3">
       <div className="container">
@@ -16,9 +19,9 @@ const NavBar = (props) => {
             <div className="d-flex align-items-center">
               <div className="user-picture" />
               <div className="user-info">
-                <span className="name">{ name }</span>
+                <span className="name">{ userX }</span>
                 <br />
-                {' '}{ roteiros }{' '}roteiros
+                {' '}{ roteiroX }{' '}roteiros
               </div>
             </div>
             <div>
