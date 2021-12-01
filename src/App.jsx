@@ -9,9 +9,6 @@ import Register from './components/pages/Register/Register';
 import MyProjects from './components/pages/MyProjects/MyProjects';
 import ProjectDetails from './components/pages/ProjectDetails/ProjectDetails';
 
-import NavBar from './components/NavBar/NavBar';
-import TemplatePrivate from './components/templates/TemplatePrivate/TemplatePrivate';
-
 import ProtectedRoute from './components/miscelaneous/ProtectedRoute/ProtectedRoute';
 
 const App = () => {
