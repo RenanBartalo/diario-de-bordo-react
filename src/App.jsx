@@ -9,6 +9,9 @@ import Register from './components/pages/Register/Register';
 import MyProjects from './components/pages/MyProjects/MyProjects';
 import ProjectDetails from './components/pages/ProjectDetails/ProjectDetails';
 
+import NavBar from './components/NavBar/NavBar';
+import TemplatePrivate from './components/templates/TemplatePrivate/TemplatePrivate';
+
 import ProtectedRoute from './components/miscelaneous/ProtectedRoute/ProtectedRoute';
 
 const App = () => {
@@ -30,12 +33,12 @@ const App = () => {
       <Route path="/register" element={<Register />} />
 
       <Route
-        path="/my-projects"
+        path="/my-travels"
         element={<ProtectedRoute isLogged={isUserLogged} Page={MyProjects} />}
       />
 
       <Route
-        path="/my-projects/:projectId"
+        path="/my-travels/:travelId"
         element={<ProtectedRoute isLogged={isUserLogged} Page={ProjectDetails} />}
       />
     </Routes>
