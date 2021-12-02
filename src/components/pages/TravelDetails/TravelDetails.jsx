@@ -75,7 +75,7 @@ const TravelDetails = ({ user }) => {
 
       <div className="tasks-container">
         <div>
-          <h2>Tasks:</h2>
+          <h2>Days:</h2>
 
           <ul>
             {travel.days && travel.days.map((day) => (
