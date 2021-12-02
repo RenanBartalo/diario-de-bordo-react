@@ -25,7 +25,7 @@ const NewTripButton = () => {
   const handleInputTravel = (e) => {
     e.preventDefault();
     const which = e.target.name;
-    const value = e.target.value;
+    const { value } = e.target;
     setTravel({ ...travel, [which]: value });
   };
 
