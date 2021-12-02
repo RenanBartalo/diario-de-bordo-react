@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
@@ -12,26 +12,24 @@ import {
 import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
 
 import { getOneTravel, createOneDay } from '../../../services/api';
-import './ProjectDetails.css';
+import './TravelDetails.css';
 
 const schema = yup.object().shape({
   title: yup.string().required('Required field').min(6, 'Minimum of 6 characters').max(50, 'Minimum of 50 characters'),
   description: yup.string().required('Required field').min(15, 'Minimum of 15 characters').max(150, 'Minimum of 150 characters'),
 });
 
-const MyProjects = () => {
-  const { projectId } = useParams();
+const TravelDetails = ({ user }) => {
+  const { travelId } = useParams();
 
-  const [project, setProject] = useState({});
+  const [travel, setTravel] = useState({});
   const [show, setShow] = useState(false);
 
   const pegaUmProjetoPeloIdDaAPI = async () => {
     try {
       const token = localStorage.getItem('token');
-      const user = localStorage.getItem('user');
-      console.log(user);
-      const foundProject = await getOneTravel(projectId, token);
-      setProject(foundProject);
+      const foundTravel = await getOneTravel(travelId, token);
+      setTravel(foundTravel);
     } catch (error) {
       console.log(error);
     }
@@ -48,7 +46,7 @@ const MyProjects = () => {
     pegaUmProjetoPeloIdDaAPI();
   }, []);
 
-  console.log(project);
+  console.log(travel);
 
   const {
     values, errors, touched, handleChange, handleBlur, handleSubmit, setTouched, setValues,
@@ -57,7 +55,7 @@ const MyProjects = () => {
     validationSchema: schema,
     onSubmit: async (formData) => {
       const token = localStorage.getItem('token');
-      await createOneDay(projectId, formData, token);
+      await createOneDay(travelId, formData, token);
 
       await pegaUmProjetoPeloIdDaAPI();
 
@@ -71,22 +69,19 @@ const MyProjects = () => {
   }
 
   return (
-    <TemplatePrivate>
-      <Link className="project-card" to="anything">
-        <h1>project detail</h1>
-      </Link>
-      <h1>{project.title}</h1>
-      <p>{project.description}</p>
+    <TemplatePrivate user={user}>
+      <h1>{travel.title}</h1>
+      <p>{travel.description}</p>
 
       <div className="tasks-container">
         <div>
           <h2>Tasks:</h2>
 
           <ul>
-            {project.tasks && project.tasks.map((task) => (
+            {travel.days && travel.days.map((day) => (
               <li>
-                <h4>{task.title}</h4>
-                <p>{task.description}</p>
+                <h4>{day.title}</h4>
+                <p>{day.description}</p>
               </li>
             ))}
           </ul>
@@ -146,4 +141,4 @@ const MyProjects = () => {
   );
 };
 
-export default MyProjects;
+export default TravelDetails;
