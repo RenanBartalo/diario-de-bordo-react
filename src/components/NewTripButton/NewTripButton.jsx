@@ -18,14 +18,14 @@ const NewTripButton = () => {
     cidade: '',
     initialDate: '',
     finalDate: '',
-    travelDecription: '',
+    description: '',
     coverPicture: '',
   });
 
   const handleInputTravel = (e) => {
     e.preventDefault();
     const which = e.target.name;
-    const value = { ...e.target.value };
+    const value = e.target.value;
     setTravel({ ...travel, [which]: value });
   };
 
@@ -68,7 +68,7 @@ const NewTripButton = () => {
       .required('Campo obrigatório')
       .min(3, 'Minimum of 3 characters')
       .max(100, 'Maximum of 100 characters'),
-    travelDecription: yup
+    description: yup
       .string()
       .required('Campo obrigatório')
       .min(3, 'Minimum of 3 characters')
@@ -91,7 +91,7 @@ const NewTripButton = () => {
       cidade: '',
       initialDate: '',
       finalDate: '',
-      travelDecription: '',
+      description: '',
       coverPicture: '',
     },
     validationSchema: newTripSchema,
@@ -198,20 +198,20 @@ const NewTripButton = () => {
                 <Form.Group className="mb-3">
                   <Form.Label>Adicione uma descrição</Form.Label>
                   <Form.Control
-                    name="travelDecription"
+                    name="description"
                     onChange={handleInputTravel}
                     onBlur={handleBlur}
                     isValid={
-                      touched.travelDecription && !errors.travelDecription
+                      touched.description && !errors.description
                     }
                     isInvalid={
-                      touched.travelDecription && errors.travelDecription
+                      touched.description && errors.description
                     }
                     as="textarea"
                     rows={3}
                   />
                   <Form.Control.Feedback type="invalid">
-                    {errors.travelDecription}
+                    {errors.description}
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Button

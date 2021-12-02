@@ -37,7 +37,7 @@ const MyTravels = ({ setUser, user }) => {
 
   useEffect(() => {
     getProjectsByTitle();
-  }, [searchTitle]);
+  }, [searchTitle, projects]);
   // Chama a callback quando o componente termina de montar pela primeira vez
   // OU quando a variavel searchTitle é atualizada
 
