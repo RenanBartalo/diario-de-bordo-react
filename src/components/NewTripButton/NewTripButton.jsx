@@ -3,6 +3,7 @@ import { React, useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import FileBase from 'react-file-base64';
 
 import { Form, Button } from 'react-bootstrap';
 
@@ -82,6 +83,11 @@ const NewTripButton = () => {
       }
     },
   });
+  const handleClick = (step) => {
+    if (!errors[step]) {
+      setFormStep(formStep + 1);
+    }
+  };
   return (
     <div>
       <button type="button" onClick={handleShow} className="new-trip-button">
@@ -117,7 +123,7 @@ const NewTripButton = () => {
                 <Button
                   type="button"
                   size="lg"
-                  onClick={() => setFormStep(formStep + 1)}
+                  onClick={() => handleClick('cidade')}
                   className="register-submit-button"
                 >
                   Próximo passo
@@ -162,7 +168,7 @@ const NewTripButton = () => {
                 <Button
                   type="button"
                   size="lg"
-                  onClick={() => setFormStep(formStep + 1)}
+                  onClick={() => handleClick('finalDate', 'initialDate')}
                   className="register-submit-button"
                 >
                   Próximo passo
@@ -194,7 +200,7 @@ const NewTripButton = () => {
                 <Button
                   type="button"
                   size="lg"
-                  onClick={() => setFormStep(formStep + 1)}
+                  onClick={() => handleClick('description')}
                   className="register-submit-button"
                 >
                   Próximo passo
@@ -203,6 +209,14 @@ const NewTripButton = () => {
             )}
             {formStep === 3 && (
               <section>
+                {/* <FileBase
+                  name="photo"
+                  type="file"
+                  multiple={false}
+                  value={values.photo}
+                  onDone={ ({ base64 }) => { ...values, photos: base64} }
+
+                /> */}
                 <Form.Group controlId="formFile" className="mb-3">
                   <Form.Label>Adicione uma foto de capa</Form.Label>
                   <Form.Control
