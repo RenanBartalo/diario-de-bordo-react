@@ -13,6 +13,7 @@ import './new-trip-button.css';
 
 const NewTripButton = () => {
   const [show, setShow] = useState(false);
+  const [photoX, setPhoto] = useState('');
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -88,21 +89,23 @@ const NewTripButton = () => {
 
   const stepFourForm = useFormik({
     initialValues: {
-      photo: '',
+      photo: photoX,
     },
     validationSchema: stepFourSchema,
     onSubmit: async (formData) => {
       try {
+        console.log(formData);
         const data = {
           ...stepOneForm.values, ...stepTwoForm.values, ...stepThreeForm.values, ...formData,
         };
+        data.photo = photoX;
+        data.dataDeIda = data.dataDeIda.slice(0, 10).split('-').reverse().join('/');
+        data.dataDeVolta = data.dataDeVolta.slice(0, 10).split('-').reverse().join('/');
         const token = localStorage.getItem('token');
         await createOneTravel(data, token);
         handleClose();
       } catch (error) {
-        setErrors({
-          cidade: error.response.data.error,
-        });
+        console.log(error);
       }
     },
   });
@@ -223,24 +226,9 @@ const NewTripButton = () => {
           )}
           {formStep === 3 && (
             <Form onSubmit={stepFourForm.handleSubmit}>
-              {/* <FileBase
-                name="photo"
-                type="file"
-                multiple={false}
-                value={values.photo}
-                onDone={ ({ base64 }) => { ...values, photos: base64} }
-              /> */}
               <Form.Group controlId="formFile" className="mb-3">
                 <Form.Label>Adicione uma foto de capa</Form.Label>
-                <Form.Control
-                  name="photo"
-                  onChange={stepFourForm.handleChange}
-                  onBlur={stepFourForm.handleBlur}
-                  isValid={stepFourForm.touched.photo && !stepFourForm.errors.photo}
-                  isInvalid={stepFourForm.touched.photo && stepFourForm.errors.photo}
-                  type="file"
-                  value={stepFourForm.values.photo}
-                />
+                <FileBase name="photo" type="file" multiple={false} value={stepFourForm.values.photo} onDone={({ base64 }) => setPhoto(base64)} />
                 <Form.Control.Feedback type="invalid">
                   {stepFourForm.errors.photo}
                 </Form.Control.Feedback>

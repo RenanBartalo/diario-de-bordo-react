@@ -33,7 +33,7 @@ const MyTravels = ({ setUser, user }) => {
   useEffect(() => {
     getProjectsByTitle();
   }, [searchTitle]);
-  // console.log(typeof projects[14].dataDeIda)
+
   return (
     <TemplatePrivate user={user}>
       <div className="container">
@@ -52,7 +52,7 @@ const MyTravels = ({ setUser, user }) => {
                 <div
                   className="travel-card d-flex align-items-end"
                   style={{
-                    backgroundImage: 'url(https://www.segueviagem.com.br/wp-content/uploads/2016/08/Paris-Franca-shutterstock_1829492048.jpg)',
+                    backgroundImage: `url(${travel.photo})`,
                   }}
                 >
                   <div className="card-content d-flex align-items-end">
