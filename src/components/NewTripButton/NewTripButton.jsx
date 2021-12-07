@@ -3,6 +3,7 @@ import { React, useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import FileBase from 'react-file-base64';
 
 import { Form, Button } from 'react-bootstrap';
 
@@ -12,37 +13,9 @@ import './new-trip-button.css';
 
 const NewTripButton = () => {
   const [show, setShow] = useState(false);
+  const [photoX, setPhoto] = useState('');
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [travel, setTravel] = useState({
-    cidade: '',
-    initialDate: '',
-    finalDate: '',
-    description: '',
-    coverPicture: '',
-  });
-
-  const handleInputTravel = (e) => {
-    e.preventDefault();
-    const which = e.target.name;
-    const value = e.target.value;
-    setTravel({ ...travel, [which]: value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const token = localStorage.getItem('token');
-      const body = travel;
-      console.log('chamou o submit');
-      console.log(body);
-      await createOneTravel(body, token);
-
-      handleClose();
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
 
   const [formStep, setFormStep] = useState(0);
 
@@ -52,64 +25,90 @@ const NewTripButton = () => {
     }, 500);
   }, [show]);
 
-  const newTripSchema = yup.object().shape({
+  const stepOneSchema = yup.object().shape({
     cidade: yup
       .string()
       .required('Campo obrigatório')
-      .min(3, 'Minimum of 3 characters')
-      .max(100, 'Maximum of 100 characters'),
-    initialDate: yup
+      .min(3, 'Mínimo de 3 caractéres')
+      .max(100, 'Máximo de 100 caractéres'),
+  });
+  const stepTwoSchema = yup.object().shape({
+    dataDeIda: yup
       .date()
-      .required('Campo obrigatório')
-      .min(3, 'Minimum of 3 characters')
-      .max(100, 'Maximum of 100 characters'),
-    finalDate: yup
+      .required('Campo obrigatório'),
+    dataDeVolta: yup
       .date()
-      .required('Campo obrigatório')
-      .min(3, 'Minimum of 3 characters')
-      .max(100, 'Maximum of 100 characters'),
+      .when(
+        'dataDeIda',
+        (dataDeIda, schema) => (dataDeIda && schema.min(dataDeIda)),
+      )
+      .required('Campo obrigatório'),
+  });
+  const stepThreeSchema = yup.object().shape({
     description: yup
       .string()
       .required('Campo obrigatório')
-      .min(3, 'Minimum of 3 characters')
-      .max(100, 'Maximum of 100 characters'),
-    coverPicture: yup
-      .string()
-      .required('Campo obrigatório')
-      .min(3, 'Minimum of 3 characters')
-      .max(100, 'Maximum of 100 characters'),
+      .min(15, 'Mínimo de 15 caractéres')
+      .max(500, 'Máximo de 500 caractéres'),
+  });
+  const stepFourSchema = yup.object().shape({
+    photo: yup
+      .string(),
   });
 
-  const {
-    values,
-    touched,
-    errors,
-    handleBlur,
-    setErrors,
-  } = useFormik({
+  const stepOneForm = useFormik({
     initialValues: {
       cidade: '',
-      initialDate: '',
-      finalDate: '',
-      description: '',
-      coverPicture: '',
     },
-    validationSchema: newTripSchema,
-    onSubmit: async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const body = travel;
-        await createOneTravel(body, token);
+    validationSchema: stepOneSchema,
+    onSubmit: () => {
+      setFormStep(1);
+    },
+  });
 
+  const stepTwoForm = useFormik({
+    initialValues: {
+      dataDeIda: '',
+      dataDeVolta: '',
+    },
+    validationSchema: stepTwoSchema,
+    onSubmit: () => {
+      setFormStep(2);
+    },
+  });
+
+  const stepThreeForm = useFormik({
+    initialValues: {
+      description: '',
+    },
+    validationSchema: stepThreeSchema,
+    onSubmit: () => {
+      setFormStep(3);
+    },
+  });
+
+  const stepFourForm = useFormik({
+    initialValues: {
+      photo: photoX,
+    },
+    validationSchema: stepFourSchema,
+    onSubmit: async (formData) => {
+      try {
+        console.log(formData);
+        const data = {
+          ...stepOneForm.values, ...stepTwoForm.values, ...stepThreeForm.values, ...formData,
+        };
+        data.photo = photoX;
+        data.dataDeIda = data.dataDeIda.slice(0, 10).split('-').reverse().join('/');
+        data.dataDeVolta = data.dataDeVolta.slice(0, 10).split('-').reverse().join('/');
+        const token = localStorage.getItem('token');
+        await createOneTravel(data, token);
         handleClose();
       } catch (error) {
-        setErrors({
-          cidade: error.response.data.error,
-        });
+        console.log(error);
       }
     },
   });
-
   return (
     <div>
       <button type="button" onClick={handleShow} className="new-trip-button">
@@ -120,130 +119,120 @@ const NewTripButton = () => {
           <Modal.Title>Adicione sua viagem</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            {formStep === 0 && (
-              <section>
-                <Form.Group
-                  className="mb-3"
-                  controlId="exampleForm.ControlInput1"
-                >
-                  <Form.Label>Qual o destino?</Form.Label>
-                  <Form.Control
-                    name="cidade"
-                    onChange={handleInputTravel}
-                    onBlur={handleBlur}
-                    isValid={touched.cidade && !errors.cidade}
-                    isInvalid={touched.cidade && errors.cidade}
-                    type="text"
-                    placeholder="ex. Paris"
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.cidade}
-                  </Form.Control.Feedback>
-                </Form.Group>
-                <Button
-                  type="button"
-                  size="lg"
-                  onClick={() => setFormStep(formStep + 1)}
-                  className="register-submit-button"
-                >
-                  Próximo passo
-                </Button>
-              </section>
-            )}
-            {formStep === 1 && (
-              <section>
-                <Form.Group className="mb-3">
-                  <Form.Label>Data inicial</Form.Label>
-                  <Form.Control
-                    name="initialDate"
-                    onChange={handleInputTravel}
-                    onBlur={handleBlur}
-                    isValid={touched.initialDate && !errors.initialDate}
-                    isInvalid={touched.initialDate && errors.initialDate}
-                    type="date"
-                    max="2099-12-31"
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Control.Feedback type="invalid">
-                    {errors.initialDate}
-                  </Form.Control.Feedback>
-                  <Form.Label className="mt-3">Data final</Form.Label>
-                  <Form.Control
-                    name="finalDate"
-                    onChange={handleInputTravel}
-                    onBlur={handleBlur}
-                    isValid={touched.finalDate && !errors.finalDate}
-                    isInvalid={touched.finalDate && errors.finalDate}
-                    max="2099-12-31"
-                    type="date"
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.finalDate}
-                  </Form.Control.Feedback>
-                </Form.Group>
-                <Button
-                  type="button"
-                  size="lg"
-                  onClick={() => setFormStep(formStep + 1)}
-                  className="register-submit-button"
-                >
-                  Próximo passo
-                </Button>
-              </section>
-            )}
-            {formStep === 2 && (
-              <section>
-                <Form.Group className="mb-3">
-                  <Form.Label>Adicione uma descrição</Form.Label>
-                  <Form.Control
-                    name="description"
-                    onChange={handleInputTravel}
-                    onBlur={handleBlur}
-                    isValid={
-                      touched.description && !errors.description
-                    }
-                    isInvalid={
-                      touched.description && errors.description
-                    }
-                    as="textarea"
-                    rows={3}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.description}
-                  </Form.Control.Feedback>
-                </Form.Group>
-                <Button
-                  type="button"
-                  size="lg"
-                  onClick={() => setFormStep(formStep + 1)}
-                  className="register-submit-button"
-                >
-                  Próximo passo
-                </Button>
-              </section>
-            )}
-            {formStep === 3 && (
-              <section>
-                <Form.Group controlId="formFile" className="mb-3">
-                  <Form.Label>Adicione uma foto de capa</Form.Label>
-                  <Form.Control
-                    name="coverPicture"
-                    value={values.coverPicture}
-                    onChange={handleInputTravel}
-                    onBlur={handleBlur}
-                    isValid={touched.coverPicture && !errors.coverPicture}
-                    isInvalid={touched.coverPicture && errors.coverPicture}
-                    type="file"
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.coverPicture}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </section>
-            )}
-            {formStep < 3 ? undefined : (
+          {formStep === 0 && (
+          <Form onSubmit={stepOneForm.handleSubmit}>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlInput1"
+            >
+              <Form.Label>Qual o destino?</Form.Label>
+              <Form.Control
+                name="cidade"
+                onChange={stepOneForm.handleChange}
+                onBlur={stepOneForm.handleBlur}
+                isValid={stepOneForm.touched.cidade && !stepOneForm.errors.cidade}
+                isInvalid={stepOneForm.touched.cidade && stepOneForm.errors.cidade}
+                type="text"
+                placeholder="ex. Paris"
+                value={stepOneForm.values.cidade}
+              />
+              <Form.Control.Feedback type="invalid">
+                {stepOneForm.errors.cidade}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Button
+              type="submit"
+              size="lg"
+              className="register-submit-button"
+            >
+              Próximo passo
+            </Button>
+          </Form>
+          )}
+          {formStep === 1 && (
+            <Form onSubmit={stepTwoForm.handleSubmit}>
+              <Form.Group className="mb-3">
+                <Form.Label>Data inicial</Form.Label>
+                <Form.Control
+                  name="dataDeIda"
+                  onChange={stepTwoForm.handleChange}
+                  onBlur={stepTwoForm.handleBlur}
+                  isValid={stepTwoForm.touched.dataDeIda && !stepTwoForm.errors.dataDeIda}
+                  isInvalid={stepTwoForm.touched.dataDeIda && stepTwoForm.errors.dataDeIda}
+                  type="date"
+                  max="2099-12-31"
+                  value={stepTwoForm.values.dataDeIda}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {stepTwoForm.errors.dataDeIda}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label className="mt-3">Data final</Form.Label>
+                <Form.Control
+                  name="dataDeVolta"
+                  onChange={stepTwoForm.handleChange}
+                  onBlur={stepTwoForm.handleBlur}
+                  isValid={stepTwoForm.touched.dataDeVolta && !stepTwoForm.errors.dataDeVolta}
+                  isInvalid={stepTwoForm.touched.dataDeVolta && stepTwoForm.errors.dataDeVolta}
+                  min={stepTwoForm.values.dataDeIda}
+                  max="2099-12-31"
+                  type="date"
+                  value={stepTwoForm.values.dataDeVolta}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {stepTwoForm.errors.dataDeVolta}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Button
+                type="submit"
+                size="lg"
+                className="register-submit-button"
+              >
+                Próximo passo
+              </Button>
+            </Form>
+          )}
+          {formStep === 2 && (
+            <Form onSubmit={stepThreeForm.handleSubmit}>
+              <Form.Group className="mb-3">
+                <Form.Label>Adicione uma descrição</Form.Label>
+                <Form.Control
+                  name="description"
+                  onChange={stepThreeForm.handleChange}
+                  onBlur={stepThreeForm.handleBlur}
+                  isValid={
+                    stepThreeForm.touched.description && !stepThreeForm.errors.description
+                  }
+                  isInvalid={
+                    stepThreeForm.touched.description && stepThreeForm.errors.description
+                  }
+                  as="textarea"
+                  rows={3}
+                  value={stepThreeForm.values.description}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {stepThreeForm.errors.description}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Button
+                type="submit"
+                size="lg"
+                className="register-submit-button"
+              >
+                Próximo passo
+              </Button>
+            </Form>
+          )}
+          {formStep === 3 && (
+            <Form onSubmit={stepFourForm.handleSubmit}>
+              <Form.Group controlId="formFile" className="mb-3">
+                <Form.Label>Adicione uma foto de capa</Form.Label>
+                <FileBase name="photo" type="file" multiple={false} value={stepFourForm.values.photo} onDone={({ base64 }) => setPhoto(base64)} />
+                <Form.Control.Feedback type="invalid">
+                  {stepFourForm.errors.photo}
+                </Form.Control.Feedback>
+              </Form.Group>
               <Button
                 type="submit"
                 size="lg"
@@ -251,8 +240,8 @@ const NewTripButton = () => {
               >
                 Enviar
               </Button>
-            )}
-          </Form>
+            </Form>
+          )}
         </Modal.Body>
       </Modal>
     </div>
