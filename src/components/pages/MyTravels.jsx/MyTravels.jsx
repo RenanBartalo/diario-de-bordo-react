@@ -36,18 +36,41 @@ const MyTravels = ({ setUser, user }) => {
 
   return (
     <TemplatePrivate user={user}>
-      <div className="projects-container">
-        {projects.map((travel) => (
-          <Link
-            className="project-card"
-            key={travel._id}
-            to={`/my-travels/${travel._id}`}
-          >
-            <p>{travel.cidade}</p>
-          </Link>
-        ))}
+      <div className="container">
+        <div className="row">
+          {projects.map((travel) => (
+            <Link
+              key={travel._id}
+              to={`/my-travels/${travel._id}`}
+              className="col-md-4 mb-3"
+              style={{
+                textDecoration: 'none',
+                color: '#FFFFFF',
+              }}
+            >
+              <div>
+                <div
+                  className="travel-card d-flex align-items-end"
+                  style={{
+                    backgroundImage: `url(${travel.photo})`,
+                  }}
+                >
+                  <div className="card-content d-flex align-items-end">
+                    <div>
+                      <h5 className="title">{travel.cidade}</h5>
+                      <p>
+                        {travel.days}
+                        dias -
+                        {travel.dataDeIda}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
-
       <Toast
         variant="danger"
         message="An Error Has Occurred"
