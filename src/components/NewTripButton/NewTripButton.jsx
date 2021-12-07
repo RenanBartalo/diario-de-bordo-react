@@ -7,7 +7,7 @@ import FileBase from 'react-file-base64';
 
 import { Form, Button } from 'react-bootstrap';
 
-import { createOneTravel } from '../../services/api';
+import { createOneTravel, createOneDay } from '../../services/api';
 
 import './new-trip-button.css';
 
@@ -86,7 +86,22 @@ const NewTripButton = () => {
       setFormStep(3);
     },
   });
+  const dayDiff = (a, b) => {
+    const day1 = new Date(a);
+    const day2 = new Date(b);
 
+    const difference = Math.abs(day2 - day1);
+    const numberDays = difference / (1000 * 3600 * 24);
+
+    return numberDays;
+  };
+  function insertOneDay(objTravel, oToken) {
+    for (let i = 0; i <= objTravel.numDays; i += 1) {
+      const x = { dia: i, description: 'coloque aqui sua descrição!!!!' };
+      createOneDay(objTravel._id, x, oToken);
+      console.log('está com loop?');
+    }
+  }
   const stepFourForm = useFormik({
     initialValues: {
       photo: photoX,
@@ -94,15 +109,23 @@ const NewTripButton = () => {
     validationSchema: stepFourSchema,
     onSubmit: async (formData) => {
       try {
+        const numDays = 0;
         console.log(formData);
         const data = {
-          ...stepOneForm.values, ...stepTwoForm.values, ...stepThreeForm.values, ...formData,
+          ...stepOneForm.values,
+          ...stepTwoForm.values,
+          ...stepThreeForm.values,
+          ...formData,
+          ...numDays,
         };
         data.photo = photoX;
+        data.numDays = dayDiff(data.dataDeIda, data.dataDeVolta);
         data.dataDeIda = data.dataDeIda.slice(0, 10).split('-').reverse().join('/');
         data.dataDeVolta = data.dataDeVolta.slice(0, 10).split('-').reverse().join('/');
         const token = localStorage.getItem('token');
-        await createOneTravel(data, token);
+
+        const testeCatch = await createOneTravel(data, token);
+        await insertOneDay(testeCatch, token);
         handleClose();
       } catch (error) {
         console.log(error);
