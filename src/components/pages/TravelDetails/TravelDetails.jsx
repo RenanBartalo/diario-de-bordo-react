@@ -15,7 +15,7 @@ import { getOneTravel, createOneDay } from '../../../services/api';
 import './TravelDetails.css';
 
 const schema = yup.object().shape({
-  title: yup.string().required('Required field').min(6, 'Minimum of 6 characters').max(50, 'Minimum of 50 characters'),
+  dia: yup.number().required('Required field').max(3, 'Minimum of 3 characters'),
   description: yup.string().required('Required field').min(15, 'Minimum of 15 characters').max(150, 'Minimum of 150 characters'),
 });
 
@@ -25,7 +25,7 @@ const TravelDetails = ({ user }) => {
   const [travel, setTravel] = useState({});
   const [show, setShow] = useState(false);
 
-  const pegaUmProjetoPeloIdDaAPI = async () => {
+  const pegarUmaViagemPeloId = async () => {
     try {
       const token = localStorage.getItem('token');
       const foundTravel = await getOneTravel(travelId, token);
@@ -43,29 +43,32 @@ const TravelDetails = ({ user }) => {
   const abreModal = () => setShow(true);
 
   useEffect(() => {
-    pegaUmProjetoPeloIdDaAPI();
+    pegarUmaViagemPeloId();
   }, []);
-
-  console.log(travel);
 
   const {
     values, errors, touched, handleChange, handleBlur, handleSubmit, setTouched, setValues,
   } = useFormik({
-    initialValues: { title: '', description: '' },
+    initialValues: { dia: '', description: '' },
     validationSchema: schema,
     onSubmit: async (formData) => {
-      const token = localStorage.getItem('token');
-      await createOneDay(travelId, formData, token);
+      try {
+        console.log(formData);
+        const token = localStorage.getItem('token');
+        await createOneDay(travelId, formData, token);
 
-      await pegaUmProjetoPeloIdDaAPI();
+        await pegarUmaViagemPeloId();
 
-      fechaModal();
+        fechaModal();
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
   function handleLimpaTudo() {
-    setValues({ title: '', description: '' });
-    setTouched({ title: false, description: false });
+    setValues({ dia: '', description: '' });
+    setTouched({ dia: false, description: false });
   }
 
   const howmuchdays = (a, b) => {
@@ -86,8 +89,6 @@ const TravelDetails = ({ user }) => {
       <img src={travel.photo} alt="testing" />
       <div>
         dias -
-        {' '}
-        {dias}
       </div>
 
       <div className="tasks-container">
@@ -104,29 +105,29 @@ const TravelDetails = ({ user }) => {
           </ul>
         </div>
         <div>
-          <Button onClick={abreModal}>Create new Task</Button>
+          <Button onClick={abreModal}>Create new Day</Button>
         </div>
       </div>
 
       <Modal show={show} onHide={fechaModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Create New Task</Modal.Title>
+          <Modal.Title>Create New Day</Modal.Title>
         </Modal.Header>
         <Form onSubmit={handleSubmit}>
           <Modal.Body>
             <Form.Group as={Col} md="12" controlId="create-task-form">
-              <Form.Label>Title</Form.Label>
+              <Form.Label>Dia</Form.Label>
               <Form.Control
-                type="text"
-                name="title"
-                value={values.title}
+                type="number"
+                name="dia"
+                value={values.dia}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                isValid={touched.title && !errors.title}
-                isInvalid={touched.title && errors.title}
+                isValid={touched.dia && !errors.dia}
+                isInvalid={touched.dia && errors.dia}
               />
               <Form.Control.Feedback>Ok!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">{errors.title}</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">{errors.dia}</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group as={Col} md="12" controlId="create-task-form">
