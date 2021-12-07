@@ -12,9 +12,7 @@ const TemplatePrivate = ({ children, user }) => {
     <div>
       <NavBar name={user.name} roteiros={user.roteiros} />
       <ItinerariesHeader />
-      <div className="template-private-content">
-        { children }
-      </div>
+      { children }
     </div>
   );
 };
