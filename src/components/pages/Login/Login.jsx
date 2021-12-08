@@ -45,8 +45,8 @@ const Login = ({ loginUser }) => {
   return (
     <TemplatePublic>
       <div className="container container-public">
-        <div className="row h-100 d-flex justify-content-center align-items-center">
-          <div className="col-6 p-4 login-container">
+        <div className="row h-100 px-3 d-flex justify-content-center align-items-center">
+          <div className="col-md-6 p-4 login-container">
             <h2 className="mt-0 text-center">Bem-vindo ao diário de bordo</h2>
             <p className="text-center">Compartilhe seus roteiros com outros viajantes</p>
             <hr />
