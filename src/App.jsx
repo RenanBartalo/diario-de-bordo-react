@@ -9,6 +9,8 @@ import Register from './components/pages/Register/Register';
 import MyTravels from './components/pages/MyTravels.jsx/MyTravels';
 import TravelDetails from './components/pages/TravelDetails/TravelDetails';
 
+import Social from './components/pages/Social/Social';
+
 import ProtectedRoute from './components/miscelaneous/ProtectedRoute/ProtectedRoute';
 
 const App = () => {
@@ -41,6 +43,17 @@ const App = () => {
             isLogged={isUserLogged}
             Page={MyTravels}
             setUser={setUser}
+            user={user}
+          />
+)}
+      />
+
+      <Route
+        path="/social"
+        element={(
+          <ProtectedRoute
+            isLogged={isUserLogged}
+            Page={Social}
             user={user}
           />
 )}

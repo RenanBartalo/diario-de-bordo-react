@@ -71,17 +71,6 @@ const TravelDetails = ({ user }) => {
     setTouched({ dia: false, description: false });
   }
 
-  const howmuchdays = (a, b) => {
-    const day1 = new Date(a);
-    const day2 = new Date(b);
-
-    const difference = Math.abs(day2 - day1);
-    const days = difference / (1000 * 3600 * 24);
-
-    return days;
-  };
-
-  const dias = howmuchdays(travel.dataDeIda, travel.dataDeVolta);
   return (
     <TemplatePrivate user={user}>
       <h1>{travel.title}</h1>

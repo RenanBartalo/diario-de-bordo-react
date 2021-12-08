@@ -96,6 +96,7 @@ const NewTripButton = () => {
     return numberDays;
   };
   function insertOneDay(objTravel, oToken) {
+    console.log(objTravel);
     for (let i = 0; i <= objTravel.numDays; i += 1) {
       const x = { dia: i, description: 'coloque aqui sua descrição!!!!' };
       createOneDay(objTravel._id, x, oToken);
