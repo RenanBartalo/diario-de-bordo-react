@@ -24,6 +24,8 @@ const NavBar = ({ ...props }) => {
             </div>
             <div>
               <Link to="/" className="logout">logout</Link>
+              ----
+              <Link to="/social" className="logout">social</Link>
             </div>
           </div>
         </div>

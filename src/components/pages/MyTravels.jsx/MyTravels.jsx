@@ -59,7 +59,7 @@ const MyTravels = ({ setUser, user }) => {
                     <div>
                       <h5 className="title">{travel.cidade}</h5>
                       <p>
-                        {travel.days}
+                        {travel.numDays}
                         dias -
                         {travel.dataDeIda}
                       </p>

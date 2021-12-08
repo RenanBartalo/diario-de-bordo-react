@@ -49,3 +49,8 @@ export const createOneDay = async (travelId, body, token) => {
 
   return response.data;
 };
+
+export const getAllToSocial = async (token) => {
+  const response = await api.get('/travels/social', setHeaders(token));
+  return response.data;
+};
