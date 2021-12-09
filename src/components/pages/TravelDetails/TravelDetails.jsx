@@ -71,7 +71,11 @@ const TravelDetails = ({ user }) => {
     setValues({ dia: '', description: '' });
     setTouched({ dia: false, description: false });
   }
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> 8345994e307393745d325d2e2a38215685ec4848
   return (
     
     <TemplatePrivate user={user}>
