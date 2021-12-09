@@ -3,15 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NavBar from '../../NavBar/NavBar';
 
-import ItinerariesHeader from '../../ItinerariesHeader/ItinerariesHeader';
-
 import './TemplatePrivate.css';
 
 const TemplatePrivate = ({ children, user }) => {
   return (
     <div>
       <NavBar name={user.name} roteiros={user.roteiros} />
-      <ItinerariesHeader />
       { children }
     </div>
   );

@@ -1,4 +1,12 @@
-.tasks-container {
-  display: flex;
-  justify-content: space-between;
+
+.details-container {
+  height: 400px;
+  padding: 0;
+  color: #FFFFFF;
+}
+
+.details-inner {
+  background: linear-gradient(to top, #000 5%, transparent);
+  height: 100%;
+  padding-bottom: 30px;
 }
