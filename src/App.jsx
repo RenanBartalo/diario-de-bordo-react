@@ -9,6 +9,8 @@ import Register from './components/pages/Register/Register';
 import MyTravels from './components/pages/MyTravels.jsx/MyTravels';
 import TravelDetails from './components/pages/TravelDetails/TravelDetails';
 
+import DayDetails from './components/pages/DayDetails/DayDetails';
+
 import Social from './components/pages/Social/Social';
 
 import ProtectedRoute from './components/miscelaneous/ProtectedRoute/ProtectedRoute';
@@ -62,6 +64,10 @@ const App = () => {
       <Route
         path="/my-travels/:travelId"
         element={<ProtectedRoute isLogged={isUserLogged} Page={TravelDetails} user={user} />}
+      />
+      <Route
+        path="/detail/:dayId"
+        element={<ProtectedRoute isLogged={isUserLogged} Page={DayDetails} user={user} />}
       />
     </Routes>
   );

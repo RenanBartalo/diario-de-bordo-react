@@ -50,6 +50,12 @@ export const createOneDay = async (travelId, body, token) => {
   return response.data;
 };
 
+export const getOneDay = async (dayId, token) => {
+  console.log('chamou o get one day!');
+  const response = await api.get(`/days/detail/${dayId}`, setHeaders(token));
+  return response.data;
+};
+
 export const getAllToSocial = async (token) => {
   const response = await api.get('/travels/social', setHeaders(token));
   return response.data;

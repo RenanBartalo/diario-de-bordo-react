@@ -2,15 +2,12 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 
-
 import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
 import Toast from '../../miscelaneous/Toast/Toast';
 import ItinerariesHeader from '../../ItinerariesHeader/ItinerariesHeader';
 
 import { getTravels } from '../../../services/api';
 import TravelCard from '../../Card/TravelCard';
-
-
 
 const MyTravels = ({ setUser, user }) => {
   const [show, setShow] = useState(false);
@@ -42,7 +39,7 @@ const MyTravels = ({ setUser, user }) => {
         <div className="row">
           {projects.map((travel) => (
             <TravelCard
-              props = {travel}
+              props={travel}
             />
           ))}
         </div>
