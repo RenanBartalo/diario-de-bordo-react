@@ -2,33 +2,34 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './card.css';
 
-const DayCard = ({...props}) => {
+const DayCard = ({ ...props }) => {
+  const {
+    _id, photos, dia, description,
+  } = props.dia;
   return (
     <Link
-      key={props._id}
-      to={`/my-travels/`}
+      key={_id}
+      to={`/detail/${_id}`}
       className="col-lg-3 col-md-4 mb-3"
       style={{
         textDecoration: 'none',
         color: '#FFFFFF',
       }}
     >
-        <div
-          className="travel-card d-flex align-items-end"
-        //   style={{
-        //     backgroundImage: `url(${photo})`,
-        //   }}
-        >
-          <div className="card-content d-flex align-items-end">
-            <div>
-              <h5 className="title">{props.day}</h5>
-              <p>
-                {props.description}
-              </p>
-            </div>
+      <div className="travel-card d-flex align-items-end">
+        <div className="card-content d-flex align-items-end">
+          <div>
+            <h5 className="title">
+              dia -
+              {' '}
+              {dia}
+            </h5>
+            <p>{description}</p>
           </div>
         </div>
+      </div>
     </Link>
-)}
+  );
+};
 
-export default DayCard
+export default DayCard;

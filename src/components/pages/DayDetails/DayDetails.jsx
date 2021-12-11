@@ -4,46 +4,45 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
-import DayCard from '../../Card/DayCard';
 
-import { getOneTravel } from '../../../services/api';
-import './TravelDetails.css';
+import { getOneDay } from '../../../services/api';
+import './DayDetails.css';
 
-const TravelDetails = ({ user }) => {
-  const { travelId } = useParams();
-
-  const [travel, setTravel] = useState({});
-
-  const pegarUmaViagemPeloId = async () => {
+const DayDetails = ({ user }) => {
+  const [day, setDay] = useState([]);
+  const { dayId } = useParams();
+  const getDay = async () => {
     try {
       const token = localStorage.getItem('token');
-      const foundTravel = await getOneTravel(travelId, token);
-      setTravel(foundTravel);
+      const dayFounded = await getOneDay(dayId, token);
+      setDay(dayFounded);
+      console.log(dayFounded);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    pegarUmaViagemPeloId();
+    getDay();
   }, []);
 
   return (
+    
     <TemplatePrivate user={user}>
-      <section className="container-fluid details-container" style={{ backgroundImage: `url(${travel.photo})` }}>
+      <section className="container-fluid details-container" style={{ backgroundImage: `url(${dayId})` }}>
         <div className="details-inner d-flex align-items-end">
           <div className="container">
             <div className="row">
               <div className="col-12">
-                <h1>{travel.cidade}</h1>
+                <h1>que dia</h1>
                 <p>
                   De
                   {' '}
-                  {travel.dataDeIda}
+
                   {' '}
                   a
                   {' '}
-                  {travel.dataDeVolta}
+
                 </p>
               </div>
             </div>
@@ -54,19 +53,12 @@ const TravelDetails = ({ user }) => {
         <div className="row">
           <div className="col-12 py-4">
             <h2>Detalhes da viagem</h2>
-            <p>{travel.description}</p>
+            <p>{day.description}</p>
           </div>
-        </div>
-        <div className="row">
-          {travel.days && travel.days.map((day) => (
-            <DayCard
-              dia={day}
-            />
-          ))}
         </div>
       </section>
     </TemplatePrivate>
   );
 };
 
-export default TravelDetails;
+export default DayDetails;
