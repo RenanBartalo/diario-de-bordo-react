@@ -4,7 +4,7 @@ import './card.css';
 
 const DayCard = ({ ...props }) => {
   const {
-    _id, photos, dia, description,
+    _id, dia, description,
   } = props.dia;
   return (
     <Link

@@ -27,7 +27,6 @@ const DayDetails = ({ user }) => {
   }, []);
 
   return (
-    
     <TemplatePrivate user={user}>
       <section className="container-fluid details-container" style={{ backgroundImage: `url(${dayId})` }}>
         <div className="details-inner d-flex align-items-end">

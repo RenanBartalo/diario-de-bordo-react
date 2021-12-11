@@ -51,7 +51,6 @@ export const createOneDay = async (travelId, body, token) => {
 };
 
 export const getOneDay = async (dayId, token) => {
-  console.log('chamou o get one day!');
   const response = await api.get(`/days/detail/${dayId}`, setHeaders(token));
   return response.data;
 };
