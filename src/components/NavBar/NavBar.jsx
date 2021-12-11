@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 import './navbar.css';
 
@@ -23,9 +24,16 @@ const NavBar = ({ ...props }) => {
               </div>
             </div>
             <div>
-              <Link to="/" className="logout">logout</Link>
-              ----
-              <Link to="/social" className="logout">social</Link>
+              <Link to="/" className="logout">
+                <Button>
+                  logout
+                </Button>
+              </Link>
+              <Link to="/social" className="logout">
+                <Button variant="outline-secondary ms-3">
+                  Social
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
