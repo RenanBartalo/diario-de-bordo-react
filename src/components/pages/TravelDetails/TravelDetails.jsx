@@ -5,11 +5,9 @@ import { useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import {
-  Button, Modal, Form, Col,
-} from 'react-bootstrap';
 
 import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
+import DayCard from '../../Card/DayCard';
 
 import { getOneTravel, createOneDay } from '../../../services/api';
 import './TravelDetails.css';
@@ -71,79 +69,38 @@ const TravelDetails = ({ user }) => {
     setTouched({ dia: false, description: false });
   }
 
+  console.log(travel)
   return (
     <TemplatePrivate user={user}>
-      <h1>{travel.title}</h1>
-      <p>{travel.description}</p>
-      <img src={travel.photo} alt="testing" />
-      <div>
-        dias -
-      </div>
-
-      <div className="tasks-container">
-        <div>
-          <h2>Days:</h2>
-
-          <ul>
-            {travel.days && travel.days.map((day) => (
-              <li>
-                <h4>{day.title}</h4>
-                <p>{day.description}</p>
-              </li>
-            ))}
-          </ul>
+      <section className="container-fluid details-container" style={{ backgroundImage: `url(${travel.photo})`}}>
+        <div className="details-inner d-flex align-items-end">
+          <div className="container">
+            <div className="row">
+              <div className="col-12">
+                <h1>{travel.cidade}</h1>
+                <p>De {travel.dataDeIda} a {travel.dataDeVolta}</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div>
-          <Button onClick={abreModal}>Create new Day</Button>
+      </section>
+      <section className="container">
+        <div className="row">
+          <div className="col-12 py-4">
+            <h2>Detalhes da viagem</h2>
+            <p>{travel.description}</p>
+          </div>
         </div>
-      </div>
-
-      <Modal show={show} onHide={fechaModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Create New Day</Modal.Title>
-        </Modal.Header>
-        <Form onSubmit={handleSubmit}>
-          <Modal.Body>
-            <Form.Group as={Col} md="12" controlId="create-task-form">
-              <Form.Label>Dia</Form.Label>
-              <Form.Control
-                type="number"
-                name="dia"
-                value={values.dia}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                isValid={touched.dia && !errors.dia}
-                isInvalid={touched.dia && errors.dia}
-              />
-              <Form.Control.Feedback>Ok!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">{errors.dia}</Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group as={Col} md="12" controlId="create-task-form">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                type="text"
-                name="description"
-                value={values.description}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                isValid={touched.description && !errors.description}
-                isInvalid={touched.description && errors.description}
-              />
-              <Form.Control.Feedback>Ok!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">{errors.description}</Form.Control.Feedback>
-            </Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={fechaModal}>
-              Close
-            </Button>
-            <Button variant="primary" type="submit">
-              Create
-            </Button>
-          </Modal.Footer>
-        </Form>
-      </Modal>
+        <div className="row">
+          {travel.days && travel.days.map((day) => (
+            <DayCard
+              key={day._id}
+              day={`Dia ${day.dia}`}
+              description={day.description}
+            />
+          ))}
+        </div>
+      </section>
     </TemplatePrivate>
   );
 };
