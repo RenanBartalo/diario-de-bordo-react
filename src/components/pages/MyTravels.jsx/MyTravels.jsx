@@ -2,14 +2,13 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 
-import { Link } from 'react-router-dom';
 
 import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
 import Toast from '../../miscelaneous/Toast/Toast';
-import Card from '../../Card/TravelCard';
 import ItinerariesHeader from '../../ItinerariesHeader/ItinerariesHeader';
 
 import { getTravels } from '../../../services/api';
+import TravelCard from '../../Card/TravelCard';
 
 
 
@@ -42,40 +41,9 @@ const MyTravels = ({ setUser, user }) => {
       <div className="container">
         <div className="row">
           {projects.map((travel) => (
-<<<<<<< HEAD
-            <Card
-            props = {travel} />
-=======
-            <Link
-              key={travel._id}
-              to={`/my-travels/${travel._id}`}
-              className="col-md-4 mb-3"
-              style={{
-                textDecoration: 'none',
-                color: '#FFFFFF',
-              }}
-            >
-              <div>
-                <div
-                  className="travel-card d-flex align-items-end"
-                  style={{
-                    backgroundImage: `url(${travel.photo})`,
-                  }}
-                >
-                  <div className="card-content d-flex align-items-end">
-                    <div>
-                      <h5 className="title">{travel.cidade}</h5>
-                      <p>
-                        {travel.numDays}
-                        dias -
-                        {travel.dataDeIda}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Link>
->>>>>>> 8345994e307393745d325d2e2a38215685ec4848
+            <TravelCard
+              props = {travel}
+            />
           ))}
         </div>
       </div>

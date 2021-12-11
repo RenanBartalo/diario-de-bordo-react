@@ -5,9 +5,6 @@ import { useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import {
-  Button, Modal, Form, Col,
-} from 'react-bootstrap';
 
 import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
 import DayCard from '../../Card/DayCard';
@@ -71,13 +68,9 @@ const TravelDetails = ({ user }) => {
     setValues({ dia: '', description: '' });
     setTouched({ dia: false, description: false });
   }
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> 8345994e307393745d325d2e2a38215685ec4848
+  console.log(travel)
   return (
-    
     <TemplatePrivate user={user}>
       <section className="container-fluid details-container" style={{ backgroundImage: `url(${travel.photo})`}}>
         <div className="details-inner d-flex align-items-end">
@@ -99,9 +92,13 @@ const TravelDetails = ({ user }) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-12">
-            
-          </div>
+          {travel.days && travel.days.map((day) => (
+            <DayCard
+              key={day._id}
+              day={`Dia ${day.dia}`}
+              description={day.description}
+            />
+          ))}
         </div>
       </section>
     </TemplatePrivate>

@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './card.css';
-const TravelCard = ({props}) => {
-  console.log(props)
+
+const TravelCard = ({...props}) => {
+  const {_id, photo, cidade, numDays, dataDeIda, dataDeVolta } = props.props
+  console.log(cidade)
   return (
     <Link
-      key={props._id}
-      to={`/my-travels/${props._id}`}
+      key={_id}
+      to={`/my-travels/${_id}`}
       className="col-lg-4 col-md-6 mb-3"
       style={{
         textDecoration: 'none',
@@ -16,16 +18,16 @@ const TravelCard = ({props}) => {
         <div
           className="travel-card d-flex align-items-end"
           style={{
-            backgroundImage: `url(${props.photo})`,
+            backgroundImage: `url(${photo})`,
           }}
         >
           <div className="card-content d-flex align-items-end">
             <div>
-              <h5 className="title">{props.cidade}</h5>
+              <h5 className="title">{cidade}</h5>
               <p>
-                {props.numDays}
+                {numDays}
                 dias -
-                {props.dataDeIda} a {props.dataDeVolta}
+                {dataDeIda} a {dataDeVolta}
               </p>
             </div>
           </div>
