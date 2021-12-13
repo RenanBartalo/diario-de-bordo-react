@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 
 import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
+import DayCard from '../../Card/DayCard';
 
 import { getAllToSocial } from '../../../services/api';
 
@@ -30,23 +31,20 @@ const Social = ({ user }) => {
     }, {});
     setTravelsByUser([groupTravelsByUser]);
   }, [travels]);
-   const y = Object.entries(travelsByUser[0]);
-  console.log(y[0]); 
+  const y = Object.entries(travelsByUser[0]);
+  console.log(y[0]);
   return (
     <TemplatePrivate user={user}>
       <h1>Hi</h1>
       <p>
-       {y[0][0]}
-      {y[0][1].map((x) => (
-        x.cidade
-          ))}
+        {y[0][0]}
+        {y[0][1].map((x) => x.cidade)}
       </p>
       <p>
-      {y[1][0]} 
-      {y[1][1].map((x) => (
-        <DayCard
-              dia={x}
-            />
+        {y[1][0]}
+        {y[1][1].map((x) => (
+          <DayCard dia={x} />
+        ))}
       </p>
     </TemplatePrivate>
   );

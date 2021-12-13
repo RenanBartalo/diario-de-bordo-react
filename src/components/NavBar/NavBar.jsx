@@ -3,7 +3,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import Gear from '../../images/settings.png'
+import Gear from '../../images/settings.png';
 
 import './navbar.css';
 
@@ -38,7 +38,7 @@ const NavBar = ({ ...props }) => {
                     Social
                   </Button>
                 </Link>
-                <img src={ Gear } alt="Settings Icon" className="gear hide" />
+                <img src={Gear} alt="Settings Icon" className="gear hide" />
               </div>
             </div>
           </div>

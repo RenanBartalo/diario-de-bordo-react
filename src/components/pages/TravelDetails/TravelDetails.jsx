@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 
 import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
 import DayCard from '../../Card/DayCard';
+import EditDayButton from '../../EditDayButton/EditDayButton';
+import DeleteDayButton from '../../DeleteDayButton/DeleteDayButton';
 
 import { getOneTravel } from '../../../services/api';
 import './TravelDetails.css';
@@ -34,7 +36,7 @@ const TravelDetails = ({ user }) => {
         <div className="details-inner d-flex align-items-end">
           <div className="container">
             <div className="row">
-              <div className="col-12">
+              <div className="col-md-6">
                 <h1>{travel.cidade}</h1>
                 <p>
                   De
@@ -45,6 +47,12 @@ const TravelDetails = ({ user }) => {
                   {' '}
                   {travel.dataDeVolta}
                 </p>
+              </div>
+              <div className="col-md-6 align-self-center">
+                <div className="buttons-container">
+                  <EditDayButton />
+                  <DeleteDayButton className="mx-3" />
+                </div>
               </div>
             </div>
           </div>

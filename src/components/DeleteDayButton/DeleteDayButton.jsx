@@ -1,27 +1,41 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 
-const DeleteDayButton = () => {
+import { deleteOneDay } from '../../services/api';
+
+const DeleteDayButton = (x) => {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const dayId = Object.values(x);
+  const deleteOneDayById = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      await deleteOneDay(dayId[0], token);
+      navigate('/my-travels');
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="ms-3">
       <Button variant="danger" onClick={handleShow}>
-        Editar
+        Deletar
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Deletar o dia?</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+        <Modal.Body>Essa ação é irreversível.</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Voltar
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
+          <Button variant="danger" onClick={deleteOneDayById}>
+            Deletar
           </Button>
         </Modal.Footer>
       </Modal>
