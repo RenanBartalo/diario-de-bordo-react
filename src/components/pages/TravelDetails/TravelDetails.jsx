@@ -6,6 +6,7 @@ import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
 import DayCard from '../../Card/DayCard';
 import EditDayButton from '../../EditDayButton/EditDayButton';
 import DeleteDayButton from '../../DeleteDayButton/DeleteDayButton';
+
 import { getOneTravel } from '../../../services/api';
 import './TravelDetails.css';
 const TravelDetails = ({ user }) => {

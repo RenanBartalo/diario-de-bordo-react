@@ -22,7 +22,7 @@ const DayDetails = ({ user }) => {
       console.log(error);
     }
   };
-
+  console.log(dayId);
   useEffect(() => {
     getDay();
   }, []);
@@ -63,7 +63,9 @@ const DayDetails = ({ user }) => {
               <div className="col-md-6 align-self-center">
                 <div className="buttons-container">
                   <EditDayButton />
-                  <DeleteDayButton className="mx-3" />
+                  <DeleteDayButton
+                    x={dayId}
+                  />
                 </div>
               </div>
             </div>
