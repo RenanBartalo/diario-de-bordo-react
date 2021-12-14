@@ -21,22 +21,17 @@ const NavBar = ({ ...props }) => {
                 <div className="d-flex align-items-center">
                   <div className="user-picture" />
                   <div className="user-info">
-                    <span className="name">{ theName }</span>
-                    <br />
-                    {' '}{ theNumber }{' '}roteiros
+                    <span className="name">{theName}</span>
+                    <br /> {theNumber} roteiros
                   </div>
                 </div>
               </Link>
               <div>
                 <Link to="/" className="logout">
-                  <Button>
-                    logout
-                  </Button>
+                  <Button>logout</Button>
                 </Link>
                 <Link to="/social" className="hide">
-                  <Button variant="outline-secondary ms-3">
-                    Social
-                  </Button>
+                  <Button variant="outline-secondary ms-3">Social</Button>
                 </Link>
                 <img src={Gear} alt="Settings Icon" className="gear hide" />
               </div>
@@ -46,14 +41,10 @@ const NavBar = ({ ...props }) => {
       </nav>
       <section id="footer" className="show">
         <Link to="/social">
-          <Button variant="outline-secondary ms-3">
-            Social
-          </Button>
+          <Button variant="outline-secondary ms-3">Social</Button>
         </Link>
         <Link to="/social">
-          <Button variant="outline-secondary ms-3">
-            Ajustes
-          </Button>
+          <Button variant="outline-secondary ms-3">Ajustes</Button>
         </Link>
       </section>
     </div>

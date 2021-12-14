@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './card.css';
 
 const TravelCard = ({ ...props }) => {
+  console.log(props);
   const {
     _id, photo, cidade, numDays, dataDeIda, dataDeVolta,
   } = props.props;
