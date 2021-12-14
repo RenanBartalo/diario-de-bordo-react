@@ -30,6 +30,7 @@ const DayDetails = ({ user }) => {
   const pegarUmaViagemPeloId = async () => {
     try {
       const token = localStorage.getItem('token');
+      console.log(day.travel);
       const travelId = day.travel;
       const foundTravel = await getOneTravel(travelId, token);
       setTravel(foundTravel);
@@ -37,10 +38,10 @@ const DayDetails = ({ user }) => {
       console.log(error);
     }
   };
-
   useEffect(() => {
     pegarUmaViagemPeloId();
   }, [day]);
+  console.log(travel);
   return (
     <TemplatePrivate user={user}>
       <section className="container-fluid details-container" style={{ backgroundImage: `url(${dayId})` }}>
