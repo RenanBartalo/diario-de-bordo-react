@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
-import React from 'react';
-
-import { Form, Col, Button } from 'react-bootstrap';
-
+import React, { useState } from 'react';
+import FileBase from 'react-file-base64';
+import { Form, Button } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 import TemplatePublic from '../../templates/TemplatePublic/TemplatePublic';
 
 import { updateUser } from '../../../services/api';
@@ -11,12 +11,29 @@ import './User.css';
 
 const User = () => {
   console.log(updateUser);
+  const [photox, setPhoto] = useState('');
+  const { userId } = useParams();
+  console.log(userId);
+  console.log(photox);
+
+  const editUser = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const body = { photo: photox };
+      await updateUser(userId, body, token);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(err);
+    }
+  };
 
   const handleSubmit = () => {
     console.log('chamou o submit');
+    editUser();
   };
-  const handleChange = () => {
-    console.log('chamou o change');
+
+  const handleChange = (e) => {
+    setPhoto(e);
   };
 
   return (
@@ -27,45 +44,25 @@ const User = () => {
             <h2 className="mt-0 text-center">Altere seus dados</h2>
             <hr />
             <Form onSubmit={handleSubmit}>
-              <Form.Group as={Col} md="12" controlId="register-form" className="pt-3">
-                <Form.Control
-                  placeholder="Nome"
-                  type="text"
-                  name="name"
-                  value={(e) => console.log(e)}
-                  onChange={handleChange}
-                />
-                <Form.Control.Feedback>Ok!</Form.Control.Feedback>
-              </Form.Group>
-
-              <Form.Group as={Col} md="12" controlId="register-form" className="pt-3">
-                <Form.Control
-                  placeholder="E-mail"
-                  type="text"
-                  name="email"
-                  value={(e) => console.log(e)}
-                  onChange={handleChange}
-                />
-                <Form.Control.Feedback>Ok!</Form.Control.Feedback>
-              </Form.Group>
-
-              <Form.Group as={Col} md="12" controlId="register-form" className="pt-3">
-                <Form.Control
-                  placeholder="foto"
-                  type="photo"
-                  name="photo"
-                  value={(e) => console.log(e)}
-                  onChange={handleChange}
-                />
-                <Form.Control.Feedback>Ok!</Form.Control.Feedback>
-              </Form.Group>
-
-              <Button type="submit" size="lg" className="register-submit-button">Cadastrar</Button>
+              <Form.Label>Adicione uma foto de perfil</Form.Label>
+              <FileBase
+                name="photo"
+                type="file"
+                multiple={false}
+                onChange={(e) => handleChange(e.target.value)}
+                onDone={({ base64 }) => setPhoto(base64)}
+              />
+              <Button
+                type="submit"
+                size="lg"
+                className="register-submit-button"
+              >
+                Alterar
+              </Button>
             </Form>
           </div>
         </div>
       </div>
-
     </TemplatePublic>
   );
 };
