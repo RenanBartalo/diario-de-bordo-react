@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
@@ -15,7 +16,7 @@ const DeleteDayButton = (x) => {
     try {
       const token = localStorage.getItem('token');
       await deleteOneDay(dayId[0], token);
-      navigate('/my-travels');
+      navigate(-1);
     } catch (err) {
       console.log(err);
     }

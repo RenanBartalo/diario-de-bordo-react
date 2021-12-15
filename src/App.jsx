@@ -12,6 +12,7 @@ import TravelDetails from './components/pages/TravelDetails/TravelDetails';
 import DayDetails from './components/pages/DayDetails/DayDetails';
 
 import Social from './components/pages/Social/Social';
+import User from './components/pages/User/User';
 
 import ProtectedRoute from './components/miscelaneous/ProtectedRoute/ProtectedRoute';
 
@@ -68,6 +69,10 @@ const App = () => {
       <Route
         path="/detail/:dayId"
         element={<ProtectedRoute isLogged={isUserLogged} Page={DayDetails} user={user} />}
+      />
+      <Route
+        path="/user/:userId"
+        element={<ProtectedRoute isLogged={isUserLogged} Page={User} user={user} />}
       />
     </Routes>
   );

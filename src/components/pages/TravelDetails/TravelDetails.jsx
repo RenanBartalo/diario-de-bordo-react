@@ -9,6 +9,7 @@ import DeleteDayButton from '../../DeleteDayButton/DeleteDayButton';
 
 import { getOneTravel } from '../../../services/api';
 import './TravelDetails.css';
+
 const TravelDetails = ({ user }) => {
   const { travelId } = useParams();
   const [travel, setTravel] = useState({});
@@ -36,7 +37,13 @@ const TravelDetails = ({ user }) => {
               <div className="col-md-6">
                 <h1>{travel.cidade}</h1>
                 <p>
-                  De {travel.dataDeIda} a {travel.dataDeVolta}
+                  De
+                  {' '}
+                  {travel.dataDeIda}
+                  {' '}
+                  a
+                  {' '}
+                  {travel.dataDeVolta}
                 </p>
               </div>
               <div className="col-md-6 align-self-center">

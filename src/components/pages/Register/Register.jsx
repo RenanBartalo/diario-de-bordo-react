@@ -33,7 +33,7 @@ const Register = () => {
 
         localStorage.setItem('token', tokenResponse.token);
 
-        navigate('/my-projects');
+        navigate('/my-travels');
       } catch (error) {
         setErrors({
           email: error.response.data.error,
