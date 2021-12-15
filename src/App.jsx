@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import './App.css';
@@ -16,7 +16,31 @@ import User from './components/pages/User/User';
 
 import ProtectedRoute from './components/miscelaneous/ProtectedRoute/ProtectedRoute';
 
+import { getTravels } from './services/api';
+
 const App = () => {
+  const [projects, setProjects] = useState([]);
+  const searchTitle = '';
+  const [user, setUser] = useState({
+    name: '',
+    roteiros: '0',
+  });
+
+  const getProjectsByTitle = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const foundProjects = await getTravels(searchTitle, token);
+      setProjects(foundProjects.travels);
+      const userX = foundProjects.user.name;
+      const roteirosX = foundProjects.travels.length;
+      setUser({ ...user, name: userX, roteiros: roteirosX });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getProjectsByTitle();
+  }, [searchTitle]);
   const verifyLoggedUser = () => {
     const token = localStorage.getItem('token');
 
@@ -24,11 +48,6 @@ const App = () => {
   };
 
   const [isUserLogged, setIsUserLogged] = useState(verifyLoggedUser());
-
-  const [user, setUser] = useState({
-    name: '',
-    roteiros: '0',
-  });
 
   const loginUser = () => {
     setIsUserLogged(true);
@@ -47,6 +66,7 @@ const App = () => {
             Page={MyTravels}
             setUser={setUser}
             user={user}
+            projects={projects}
           />
 )}
       />
