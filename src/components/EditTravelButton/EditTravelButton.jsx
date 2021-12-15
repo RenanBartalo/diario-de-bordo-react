@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 
-import { deleteOneDay } from '../../services/api';
+import { editOneTravel } from '../../services/api';
 
-const DeleteDayButton = (x) => {
-  const navigate = useNavigate();
+const EditTravelButton = (x) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const dayId = Object.values(x);
-  const deleteOneDayById = async () => {
+  const travelId = Object.values(x);
+  const editOneTravelById = async () => {
     try {
       const token = localStorage.getItem('token');
-      await deleteOneDay(dayId[0], token);
-      navigate(-1);
+      await editOneTravel(travelId[0], token);
+      handleClose();
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log(err);
@@ -35,7 +33,7 @@ const DeleteDayButton = (x) => {
           <Button variant="secondary" onClick={handleClose}>
             Voltar
           </Button>
-          <Button variant="danger" onClick={deleteOneDayById}>
+          <Button variant="danger" onClick={editOneTravelById}>
             Deletar
           </Button>
         </Modal.Footer>
@@ -44,4 +42,4 @@ const DeleteDayButton = (x) => {
   );
 };
 
-export default DeleteDayButton;
+export default EditTravelButton;
