@@ -5,10 +5,11 @@ import { useParams } from 'react-router-dom';
 import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
 import DayCard from '../../Card/DayCard';
 import EditDayButton from '../../EditDayButton/EditDayButton';
-import DeleteDayButton from '../../DeleteDayButton/DeleteDayButton';
+import DeleteTravelButton from '../../DeleteTravelButton/DeleteTravelButton';
 
 import { getOneTravel } from '../../../services/api';
 import './TravelDetails.css';
+
 const TravelDetails = ({ user }) => {
   const { travelId } = useParams();
   const [travel, setTravel] = useState({});
@@ -16,6 +17,7 @@ const TravelDetails = ({ user }) => {
     try {
       const token = localStorage.getItem('token');
       const foundTravel = await getOneTravel(travelId, token);
+      console.log(user);
       setTravel(foundTravel);
     } catch (error) {
       console.log(error);
@@ -36,13 +38,19 @@ const TravelDetails = ({ user }) => {
               <div className="col-md-6">
                 <h1>{travel.cidade}</h1>
                 <p>
-                  De {travel.dataDeIda} a {travel.dataDeVolta}
+                  De
+                  {travel.dataDeIda}
+                  a
+                  {travel.dataDeVolta}
                 </p>
               </div>
               <div className="col-md-6 align-self-center">
                 <div className="buttons-container">
                   <EditDayButton />
-                  <DeleteDayButton className="mx-3" />
+                  <DeleteTravelButton
+                    x={travelId}
+                    className="mx-3"
+                  />
                 </div>
               </div>
             </div>
