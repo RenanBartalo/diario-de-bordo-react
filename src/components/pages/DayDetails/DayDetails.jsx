@@ -22,7 +22,6 @@ const DayDetails = ({ user }) => {
       console.log(error);
     }
   };
-  console.log(dayId);
   useEffect(() => {
     getDay();
   }, []);
@@ -41,7 +40,7 @@ const DayDetails = ({ user }) => {
   useEffect(() => {
     pegarUmaViagemPeloId();
   }, [day]);
-  console.log(travel);
+
   return (
     <TemplatePrivate user={user}>
       <section className="container-fluid details-container" style={{ backgroundImage: `url(${dayId})` }}>

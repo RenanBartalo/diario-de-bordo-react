@@ -39,8 +39,11 @@ const TravelDetails = ({ user }) => {
                 <h1>{travel.cidade}</h1>
                 <p>
                   De
+                  {' '}
                   {travel.dataDeIda}
+                  {' '}
                   a
+                  {' '}
                   {travel.dataDeVolta}
                 </p>
               </div>

@@ -73,3 +73,9 @@ export const getAllToSocial = async (token) => {
   const response = await api.get('/travels/social', setHeaders(token));
   return response.data;
 };
+
+export const updateUser = async (userId, body, token) => {
+  const response = await api.put(`/users/${userId}`, body, setHeaders(token));
+
+  return response.data;
+};
