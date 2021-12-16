@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
 import DayCard from '../../Card/DayCard';
-import EditDayButton from '../../EditDayButton/EditDayButton';
+import EditTravelButton from '../../EditTravelButton/EditTravelButton';
 import DeleteTravelButton from '../../DeleteTravelButton/DeleteTravelButton';
 
 import { getOneTravel } from '../../../services/api';
@@ -12,6 +12,7 @@ import './TravelDetails.css';
 
 const TravelDetails = ({ user }) => {
   const { travelId } = useParams();
+  console.log(travelId);
   const [travel, setTravel] = useState({});
   const pegarUmaViagemPeloId = async () => {
     try {
@@ -49,7 +50,10 @@ const TravelDetails = ({ user }) => {
               </div>
               <div className="col-md-6 align-self-center">
                 <div className="buttons-container">
-                  <EditDayButton />
+                  <EditTravelButton
+                    x={travelId}
+                    travel={travel}
+                  />
                   <DeleteTravelButton
                     x={travelId}
                     className="mx-3"

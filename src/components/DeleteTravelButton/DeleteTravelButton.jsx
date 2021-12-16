@@ -12,6 +12,7 @@ const DeleteTravelButton = (x) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const travelId = Object.values(x);
+  console.log(x);
   const deleteOneTravelById = async () => {
     try {
       const token = localStorage.getItem('token');

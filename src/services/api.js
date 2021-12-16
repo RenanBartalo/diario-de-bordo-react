@@ -49,8 +49,8 @@ export const deleteOneTravel = async (travelId, token) => {
   return response.data;
 };
 
-export const editOneTravel = async (travelId, token) => {
-  const response = await api.put(`/travels/${travelId}`, setHeaders(token));
+export const editOneTravel = async (body, travelId, token) => {
+  const response = await api.put(`/travels/${travelId}`, body, setHeaders(token));
   return response.data;
 };
 
