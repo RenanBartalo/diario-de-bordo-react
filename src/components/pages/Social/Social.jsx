@@ -61,7 +61,6 @@ const Social = ({ user }) => {
   };
   return (
     <TemplatePrivate user={user}>
-      <h1>Hi</h1>
       {teste.map((x) => (
         <p>
           <div className="container">
@@ -74,7 +73,9 @@ const Social = ({ user }) => {
                       <span className="name">{x[0]}</span>
                       <br />
                       {' '}
-                      000 roteiros
+                      {user.roteiros}
+                      {' '}
+                      roteiros
                     </div>
                   </div>
                 </Link>

@@ -23,7 +23,7 @@ const EditTravelButton = ({ x, travel }) => {
       setFormStep(0);
     }, 500);
   }, [show]);
-
+  console.log(travel);
   const stepOneSchema = yup.object().shape({
     cidade: yup
       .string()
@@ -69,8 +69,8 @@ const EditTravelButton = ({ x, travel }) => {
   const stepTwoForm = useFormik({
     enableReinitialize: true,
     initialValues: {
-      dataDeIda: travel.dataDeIda,
-      dataDeVolta: travel.dataDeVolta,
+      dataDeIda: travel.dataDeIda ? travel.dataDeIda.split('/').reverse().join('-') : '10/10/2010',
+      dataDeVolta: travel.dataDeVolta ? travel.dataDeVolta.split('/').reverse().join('-') : '10/10/2010',
     },
     validationSchema: stepTwoSchema,
     onSubmit: () => {

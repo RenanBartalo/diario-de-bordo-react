@@ -69,6 +69,11 @@ export const deleteOneDay = async (dayId, token) => {
   return response.data;
 };
 
+export const editOneDay = async (body, userId, token) => {
+  const response = await api.put(`/user/${userId}`, body, setHeaders(token));
+  return response.data;
+};
+
 export const getAllToSocial = async (token) => {
   const response = await api.get('/travels/social', setHeaders(token));
   return response.data;

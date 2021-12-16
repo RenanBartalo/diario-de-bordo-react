@@ -22,33 +22,33 @@ import { getTravels } from './services/api';
 
 const App = () => {
   const [projects, setProjects] = useState([]);
-  const searchTitle = ' ';
-  const [user, setUser] = useState({});
-
+  const searchTitle = '';
+  const [user, setUser] = useState({
+    name: '',
+    roteiros: '0',
+    photo: '0',
+    userId: '',
+  });
   const getProjectsByTitle = async () => {
     try {
       const token = localStorage.getItem('token');
       const foundProjects = await getTravels(searchTitle, token);
-      const userX = foundProjects.user.name;
-      setUser({ ...user, name: userX });
       setProjects(foundProjects.travels);
+      const userX = foundProjects.user.name;
+      const roteirosX = foundProjects.travels.length;
+      const photoX = foundProjects.user.photo;
+      const userIdX = foundProjects.user._id;
+      setUser({
+        ...user, name: userX, roteiros: roteirosX, photo: photoX, userId: userIdX,
+      });
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(projects, 'alterou project');
-  useEffect(() => {
-    if (!projects.length) {
-      return undefined;
-    }
-    const roteirosX = projects.length;
-    console.log('deveria atualizar roteiros');
-    setUser({ ...user, roteiros: roteirosX });
-  }, [projects]);
-  console.log(user.roteiros);
   useEffect(() => {
     getProjectsByTitle();
-  }, [searchTitle, user.roteiros]);
+  }, [searchTitle]);
+  console.log(user);
   const verifyLoggedUser = () => {
     const token = localStorage.getItem('token');
 
