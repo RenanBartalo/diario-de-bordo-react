@@ -25,6 +25,7 @@ const App = () => {
   const [user, setUser] = useState({
     name: '',
     roteiros: '0',
+    photo: '0',
   });
 
   const getProjectsByTitle = async () => {
@@ -34,7 +35,11 @@ const App = () => {
       setProjects(foundProjects.travels);
       const userX = foundProjects.user.name;
       const roteirosX = foundProjects.travels.length;
-      setUser({ ...user, name: userX, roteiros: roteirosX });
+      const photoX = foundProjects.user.photo;
+      console.log(foundProjects.user.photo);
+      setUser({
+        ...user, name: userX, roteiros: roteirosX, photo: photoX,
+      });
     } catch (error) {
       console.log(error);
     }
