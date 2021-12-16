@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
@@ -21,27 +22,33 @@ import { getTravels } from './services/api';
 
 const App = () => {
   const [projects, setProjects] = useState([]);
-  const searchTitle = '';
-  const [user, setUser] = useState({
-    name: '',
-    roteiros: '0',
-  });
+  const searchTitle = ' ';
+  const [user, setUser] = useState({});
 
   const getProjectsByTitle = async () => {
     try {
       const token = localStorage.getItem('token');
       const foundProjects = await getTravels(searchTitle, token);
-      setProjects(foundProjects.travels);
       const userX = foundProjects.user.name;
-      const roteirosX = foundProjects.travels.length;
-      setUser({ ...user, name: userX, roteiros: roteirosX });
+      setUser({ ...user, name: userX });
+      setProjects(foundProjects.travels);
     } catch (error) {
       console.log(error);
     }
   };
+  console.log(projects, 'alterou project');
+  useEffect(() => {
+    if (!projects.length) {
+      return undefined;
+    }
+    const roteirosX = projects.length;
+    console.log('deveria atualizar roteiros');
+    setUser({ ...user, roteiros: roteirosX });
+  }, [projects]);
+  console.log(user.roteiros);
   useEffect(() => {
     getProjectsByTitle();
-  }, [searchTitle]);
+  }, [searchTitle, user.roteiros]);
   const verifyLoggedUser = () => {
     const token = localStorage.getItem('token');
 
