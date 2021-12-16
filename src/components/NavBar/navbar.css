@@ -4,13 +4,19 @@ nav {
 
 .logout {
     text-decoration: none;
+    margin-right: 20px;
+}
+
+.social {
+    text-decoration: none;
+    margin-right: 20px;
 }
 
 .user-picture {
     width: 60px;
     height: 60px;
     border-radius: 100%;
-    background-color: #e5e5e5;
+    background-size: cover;
 }
 
 .user-info {
@@ -47,6 +53,10 @@ nav {
 
 .show {
     display: none;
+}
+
+.nav-bg {
+    background-color: #F8F9FA;
 }
 
 @media (max-width: 768px) {
