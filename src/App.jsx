@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
@@ -26,8 +27,8 @@ const App = () => {
     name: '',
     roteiros: '0',
     photo: '0',
+    userId: '',
   });
-
   const getProjectsByTitle = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -36,9 +37,9 @@ const App = () => {
       const userX = foundProjects.user.name;
       const roteirosX = foundProjects.travels.length;
       const photoX = foundProjects.user.photo;
-      console.log(foundProjects.user.photo);
+      const userIdX = foundProjects.user._id;
       setUser({
-        ...user, name: userX, roteiros: roteirosX, photo: photoX,
+        ...user, name: userX, roteiros: roteirosX, photo: photoX, userId: userIdX,
       });
     } catch (error) {
       console.log(error);
@@ -47,6 +48,7 @@ const App = () => {
   useEffect(() => {
     getProjectsByTitle();
   }, [searchTitle]);
+  console.log(user);
   const verifyLoggedUser = () => {
     const token = localStorage.getItem('token');
 

@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable no-console */
 import React from 'react';
+// eslint-disable-next-line no-unused-vars
 import bootstrap from 'bootstrap';
 import { Link } from 'react-router-dom';
 import './navbar.css';
@@ -9,7 +10,8 @@ const NavBar = ({ ...props }) => {
   const theName = props.name;
   const theNumber = props.roteiros;
   const thePhoto = props.photo;
-
+  const theId = props.id;
+  console.log(theId);
   return (
     <div className="nav-bg">
       <nav className="py-3 hide">
@@ -37,7 +39,7 @@ const NavBar = ({ ...props }) => {
                 <Link to="/social" className="social">
                   Social
                 </Link>
-                <Link to="/social" className="social">
+                <Link to={`/user/${theId}`} className="social">
                   Ajustes
                 </Link>
               </div>
@@ -77,7 +79,7 @@ const NavBar = ({ ...props }) => {
                 </Link>
               </li>
               <li className="nav-item my-2">
-                <Link to="/social" className="social">
+                <Link to={`/user/${theId}`} className="social">
                   Ajustes
                 </Link>
               </li>

@@ -8,7 +8,7 @@ import './TemplatePrivate.css';
 const TemplatePrivate = ({ children, user }) => {
   return (
     <div>
-      <NavBar name={user.name} roteiros={user.roteiros} photo={user.photo} />
+      <NavBar name={user.name} roteiros={user.roteiros} photo={user.photo} id={user.userId} />
       { children }
     </div>
   );
