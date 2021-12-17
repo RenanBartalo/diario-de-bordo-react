@@ -65,15 +65,20 @@ const Social = ({ user }) => {
         <p>
           <div className="container">
             <div className="row d-flex justify-content-between">
-              <div className="col-12 d-flex justify-content-between align-items-center">
+              <div className="col-12 py-3 d-flex justify-content-between align-items-center">
                 <Link to="/my-travels" className="home-link">
                   <div className="d-flex align-items-center">
-                    <div className="user-picture" />
+                    <div
+                      className="user-picture"
+                      style={{
+                        backgroundImage: `url(${x[1][0].owner.photo})`,
+                      }}
+                    />
                     <div className="user-info">
                       <span className="name">{x[0]}</span>
                       <br />
                       {' '}
-                      {user.roteiros}
+                      {x[1].length}
                       {' '}
                       roteiros
                     </div>
@@ -81,9 +86,9 @@ const Social = ({ user }) => {
                 </Link>
               </div>
             </div>
-          </div>
-          <div className="row">
-            {trying(x[1].slice(0, 3))}
+            <div className="row">
+              {trying(x[1].slice(0, 3))}
+            </div>
           </div>
         </p>
       ))}
