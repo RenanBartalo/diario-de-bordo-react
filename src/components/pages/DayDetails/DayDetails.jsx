@@ -14,6 +14,8 @@ const DayDetails = ({ user }) => {
   const [travel, setTravel] = useState([]);
   const [photoX, setPhoto] = useState('');
   const { dayId } = useParams();
+  const [myUser, setMyUser] = useState(false);
+
   const getDay = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -34,6 +36,7 @@ const DayDetails = ({ user }) => {
       const foundTravel = await getOneTravel(travelId, token);
       setTravel(foundTravel);
       setPhoto(day.photos[0]);
+      setMyUser(foundTravel.owner === user.userId);
     } catch (error) {
       console.log(error);
     }
@@ -41,10 +44,28 @@ const DayDetails = ({ user }) => {
   useEffect(() => {
     pegarUmaViagemPeloId();
   }, [day]);
-  console.log(day);
+  const showEdit = (trueOrFalse) => {
+    if (!trueOrFalse) {
+      return undefined;
+    }
+    console.log(myUser);
+    return (
+      <div className="row">
+        <div className="col-md-6 align-self-center">
+          <div className="buttons-container">
+            <EditDayButton day={day} travel={travel} />
+            <DeleteDayButton x={dayId} className="mx-3" />
+          </div>
+        </div>
+      </div>
+    );
+  };
   return (
     <TemplatePrivate user={user}>
-      <section className="container-fluid details-container" style={{ backgroundImage: `url(${photoX})` }}>
+      <section
+        className="container-fluid details-container"
+        style={{ backgroundImage: `url(${photoX})` }}
+      >
         <div className="details-inner d-flex align-items-end">
           <div className="container">
             <div className="row d-flex aling-middle">
@@ -61,14 +82,7 @@ const DayDetails = ({ user }) => {
                 </p>
               </div>
               <div className="col-md-6 align-self-center">
-                <div className="buttons-container">
-                  <EditDayButton
-                    day={day}
-                  />
-                  <DeleteDayButton
-                    x={dayId}
-                  />
-                </div>
+                <div className="buttons-container">{showEdit(myUser)}</div>
               </div>
             </div>
           </div>

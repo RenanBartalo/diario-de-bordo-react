@@ -12,14 +12,18 @@ import './TravelDetails.css';
 
 const TravelDetails = ({ user }) => {
   const { travelId } = useParams();
-  console.log(travelId);
   const [travel, setTravel] = useState({});
+  const [myUser, setMyUser] = useState(false);
+  console.log(travel);
+  console.log(user);
+  console.log(myUser);
   const pegarUmaViagemPeloId = async () => {
     try {
       const token = localStorage.getItem('token');
       const foundTravel = await getOneTravel(travelId, token);
       console.log(user);
       setTravel(foundTravel);
+      setMyUser(foundTravel.owner === user.userId);
     } catch (error) {
       console.log(error);
     }
@@ -27,6 +31,29 @@ const TravelDetails = ({ user }) => {
   useEffect(() => {
     pegarUmaViagemPeloId();
   }, []);
+
+  const showEdit = (trueOrFalse) => {
+    if (!trueOrFalse) {
+      return undefined;
+    }
+    return (
+      <div className="row">
+        <div className="col-md-6 align-self-center">
+          <div className="buttons-container">
+            <EditTravelButton
+              x={travelId}
+              travel={travel}
+            />
+            <DeleteTravelButton
+              x={travelId}
+              className="mx-3"
+            />
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <TemplatePrivate user={user}>
       <section
@@ -50,14 +77,7 @@ const TravelDetails = ({ user }) => {
               </div>
               <div className="col-md-6 align-self-center">
                 <div className="buttons-container">
-                  <EditTravelButton
-                    x={travelId}
-                    travel={travel}
-                  />
-                  <DeleteTravelButton
-                    x={travelId}
-                    className="mx-3"
-                  />
+                  {showEdit(myUser)}
                 </div>
               </div>
             </div>

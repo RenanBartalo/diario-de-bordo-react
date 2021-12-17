@@ -6,6 +6,8 @@ const DayCard = ({ ...props }) => {
   const {
     _id, dia, description, photos,
   } = props.dia;
+
+  const coverPhoto = photos[0] ? photos[0] : 'https://rotasdeviagem.com.br/wp-content/uploads/2019/06/praia-dos-artistas-natal-rn.jpg';
   return (
     <Link
       key={_id}
@@ -19,7 +21,7 @@ const DayCard = ({ ...props }) => {
       <div
         className="travel-card d-flex align-items-end"
         style={{
-          backgroundImage: `url(${photos[0]})`,
+          backgroundImage: `url(${coverPhoto})`,
         }}
       >
         <div className="travel-card d-flex align-items-end">
