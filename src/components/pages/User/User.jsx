@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import FileBase from 'react-file-base64';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { useNavigate, useParams } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
+import { useParams, useNavigate } from 'react-router-dom';
 import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
 
 import { updateUser } from '../../../services/api';

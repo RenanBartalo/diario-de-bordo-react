@@ -64,7 +64,8 @@ const DayDetails = ({ user }) => {
     <TemplatePrivate user={user}>
       <section
         className="container-fluid details-container"
-        style={{ backgroundImage: `url(${photoX})` }}
+        style={{ backgroundImage: `url(${photoX})`,
+        backgroundSize: 'cover'}}
       >
         <div className="details-inner d-flex align-items-end">
           <div className="container">
