@@ -28,6 +28,7 @@ const App = () => {
     roteiros: '0',
     photo: '0',
     userId: '',
+    email: '',
   });
   const getProjectsByTitle = async () => {
     try {
@@ -38,8 +39,9 @@ const App = () => {
       const roteirosX = foundProjects.travels.length;
       const photoX = foundProjects.user.photo;
       const userIdX = foundProjects.user._id;
+      const emailX = foundProjects.user.email;
       setUser({
-        ...user, name: userX, roteiros: roteirosX, photo: photoX, userId: userIdX,
+        ...user, name: userX, roteiros: roteirosX, photo: photoX, userId: userIdX, email: emailX,
       });
     } catch (error) {
       console.log(error);
