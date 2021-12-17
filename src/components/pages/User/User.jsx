@@ -3,9 +3,8 @@ import React, { useState } from 'react';
 import FileBase from 'react-file-base64';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
 
 import { updateUser } from '../../../services/api';
@@ -29,7 +28,7 @@ const User = ({ user }) => {
     validationSchema: updateSchema,
     onSubmit: async (formData) => {
       try {
-        console.log(formData)
+        console.log(formData);
         const token = localStorage.getItem('token');
         await updateUser(userId, formData, token);
         navigate('/my-travels');

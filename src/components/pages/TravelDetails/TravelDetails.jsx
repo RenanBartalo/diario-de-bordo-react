@@ -31,7 +31,10 @@ const TravelDetails = ({ user }) => {
     <TemplatePrivate user={user}>
       <section
         className="container-fluid details-container"
-        style={{ backgroundImage: `url(${travel.photo})` }}
+        style={{
+          backgroundImage: `url(${travel.photo})`,
+          backgroundSize: 'cover',
+        }}
       >
         <div className="details-inner d-flex align-items-end">
           <div className="container">
