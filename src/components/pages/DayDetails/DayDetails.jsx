@@ -12,6 +12,7 @@ import './DayDetails.css';
 const DayDetails = ({ user }) => {
   const [day, setDay] = useState([]);
   const [travel, setTravel] = useState([]);
+  const [photoX, setPhoto] = useState('');
   const { dayId } = useParams();
   const getDay = async () => {
     try {
@@ -25,7 +26,6 @@ const DayDetails = ({ user }) => {
   useEffect(() => {
     getDay();
   }, []);
-
   const pegarUmaViagemPeloId = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -33,6 +33,7 @@ const DayDetails = ({ user }) => {
       const travelId = day.travel;
       const foundTravel = await getOneTravel(travelId, token);
       setTravel(foundTravel);
+      setPhoto(day.photos[0]);
     } catch (error) {
       console.log(error);
     }
@@ -40,10 +41,10 @@ const DayDetails = ({ user }) => {
   useEffect(() => {
     pegarUmaViagemPeloId();
   }, [day]);
-
+  console.log(day);
   return (
     <TemplatePrivate user={user}>
-      <section className="container-fluid details-container" style={{ backgroundImage: `url(${dayId})` }}>
+      <section className="container-fluid details-container" style={{ backgroundImage: `url(${photoX})` }}>
         <div className="details-inner d-flex align-items-end">
           <div className="container">
             <div className="row d-flex aling-middle">
@@ -61,7 +62,9 @@ const DayDetails = ({ user }) => {
               </div>
               <div className="col-md-6 align-self-center">
                 <div className="buttons-container">
-                  <EditDayButton />
+                  <EditDayButton
+                    day={day}
+                  />
                   <DeleteDayButton
                     x={dayId}
                   />
@@ -74,7 +77,8 @@ const DayDetails = ({ user }) => {
       <section className="container">
         <div className="row">
           <div className="col-12 py-4">
-            <h2>Detalhes da viagem</h2>
+            <h2>Detalhes do dia:</h2>
+            <p>{day.dia}</p>
             <p>{day.description}</p>
           </div>
         </div>

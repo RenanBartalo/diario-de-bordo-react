@@ -4,7 +4,7 @@ import './card.css';
 
 const DayCard = ({ ...props }) => {
   const {
-    _id, dia, description,
+    _id, dia, description, photos,
   } = props.dia;
   return (
     <Link
@@ -16,15 +16,22 @@ const DayCard = ({ ...props }) => {
         color: '#FFFFFF',
       }}
     >
-      <div className="travel-card d-flex align-items-end">
-        <div className="card-content d-flex align-items-end">
-          <div>
-            <h5 className="title">
-              dia -
-              {' '}
-              {dia}
-            </h5>
-            <p>{description}</p>
+      <div
+        className="travel-card d-flex align-items-end"
+        style={{
+          backgroundImage: `url(${photos[0]})`,
+        }}
+      >
+        <div className="travel-card d-flex align-items-end">
+          <div className="card-content d-flex align-items-end">
+            <div>
+              <h5 className="title">
+                dia -
+                {' '}
+                {dia}
+              </h5>
+              <p>{description}</p>
+            </div>
           </div>
         </div>
       </div>

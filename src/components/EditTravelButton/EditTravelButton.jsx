@@ -23,7 +23,6 @@ const EditTravelButton = ({ x, travel }) => {
       setFormStep(0);
     }, 500);
   }, [show]);
-  console.log(travel);
   const stepOneSchema = yup.object().shape({
     cidade: yup
       .string()
@@ -97,10 +96,6 @@ const EditTravelButton = ({ x, travel }) => {
 
     return numberDays;
   };
-  console.log(stepOneForm.values);
-  console.log(stepTwoForm.values);
-  console.log(stepThreeForm.values);
-  console.log(photoX);
   const stepFourForm = useFormik({
     initialValues: {
       photo: photoX,

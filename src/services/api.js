@@ -69,8 +69,8 @@ export const deleteOneDay = async (dayId, token) => {
   return response.data;
 };
 
-export const editOneDay = async (body, userId, token) => {
-  const response = await api.put(`/user/${userId}`, body, setHeaders(token));
+export const editOneDay = async (body, dayId, token) => {
+  const response = await api.put(`/days/detail/${dayId}`, body, setHeaders(token));
   return response.data;
 };
 
