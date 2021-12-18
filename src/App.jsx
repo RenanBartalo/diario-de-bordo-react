@@ -39,7 +39,7 @@ const App = () => {
   const [user, setUser] = useState({
     name: '',
     roteiros: '0',
-    photo: '0',
+    photo: '',
     userId: '',
     email: '',
   });
@@ -68,7 +68,7 @@ const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Login loginUser={loginUser} />} />
-      <Route path="/register" element={<Register />} />
+      <Route path="/register" element={<Register loginUser={loginUser} />} />
 
       <Route
         path="/my-travels"

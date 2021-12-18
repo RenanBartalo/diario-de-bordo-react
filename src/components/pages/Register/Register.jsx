@@ -17,7 +17,7 @@ const registerSchema = yup.object().shape({
   password: yup.string().required('Campo obrigatório').max(150, 'Maximum of 150 characters'),
 });
 
-const Register = () => {
+const Register = ({ loginUser }) => {
   const navigate = useNavigate();
 
   const {
@@ -32,7 +32,7 @@ const Register = () => {
         const tokenResponse = await login({ email: formData.email, password: formData.password });
 
         localStorage.setItem('token', tokenResponse.token);
-
+        loginUser();
         navigate('/my-travels');
       } catch (error) {
         setErrors({
