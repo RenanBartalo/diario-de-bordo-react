@@ -9,14 +9,14 @@ import { useFormik } from 'formik';
 
 import { editOneDay } from '../../services/api';
 
-const EditDayButton = () => {
+const EditDayButton = ({ day }) => {
+  const dayId = day._id;
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [photoX, setPhoto] = useState(travel.photo);
+  const [photoX, setPhoto] = useState(day.photos);
   const [formStep, setFormStep] = useState(0);
-  const travelId = x;
   useEffect(() => {
     setTimeout(() => {
       setFormStep(0);
@@ -26,9 +26,8 @@ const EditDayButton = () => {
   const stepOneForm = useFormik({
     enableReinitialize: true,
     initialValues: {
-      cidade: travel.cidade,
+      dia: day.dia,
     },
-    validationSchema: stepOneSchema,
     onSubmit: () => {
       setFormStep(1);
     },
@@ -37,10 +36,8 @@ const EditDayButton = () => {
   const stepTwoForm = useFormik({
     enableReinitialize: true,
     initialValues: {
-      dataDeIda: travel.dataDeIda ? travel.dataDeIda.split('/').reverse().join('-') : '10/10/2010',
-      dataDeVolta: travel.dataDeVolta ? travel.dataDeVolta.split('/').reverse().join('-') : '10/10/2010',
+      description: day.description,
     },
-    validationSchema: stepTwoSchema,
     onSubmit: () => {
       setFormStep(2);
     },
@@ -49,49 +46,20 @@ const EditDayButton = () => {
   const stepThreeForm = useFormik({
     enableReinitialize: true,
     initialValues: {
-      description: travel.description,
+      photos: photoX,
     },
-    validationSchema: stepThreeSchema,
-    onSubmit: () => {
-      setFormStep(3);
-    },
-  });
-  const dayDiff = (a, b) => {
-    const day1 = new Date(a);
-    const day2 = new Date(b);
-
-    const difference = Math.abs(day2 - day1);
-    const numberDays = difference / (1000 * 3600 * 24);
-
-    return numberDays;
-  };
-  console.log(stepOneForm.values);
-  console.log(stepTwoForm.values);
-  console.log(stepThreeForm.values);
-  console.log(photoX);
-  const stepFourForm = useFormik({
-    initialValues: {
-      photo: photoX,
-    },
-    validationSchema: stepFourSchema,
     onSubmit: async (formData) => {
       try {
-        const numDays = 0;
         console.log(formData);
         const data = {
           ...stepOneForm.values,
           ...stepTwoForm.values,
           ...stepThreeForm.values,
           ...formData,
-          ...numDays,
         };
-        data.photo = photoX;
-        data.numDays = dayDiff(data.dataDeIda, data.dataDeVolta);
-        data.dataDeIda = data.dataDeIda.slice(0, 10).split('-').reverse().join('/');
-        data.dataDeVolta = data.dataDeVolta.slice(0, 10).split('-').reverse().join('/');
         const token = localStorage.getItem('token');
 
-        await editOneTravel(data, travelId, token);
+        await editOneDay(data, dayId, token);
 
         navigate(-1);
       } catch (error) {
@@ -99,7 +67,6 @@ const EditDayButton = () => {
       }
     },
   });
-
   return (
     <div>
       <Button onClick={handleShow}>
@@ -107,7 +74,7 @@ const EditDayButton = () => {
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Adicione sua viagem</Modal.Title>
+          <Modal.Title>Conte sobre o seu dia:</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {formStep === 0 && (
@@ -116,20 +83,17 @@ const EditDayButton = () => {
               className="mb-3"
               controlId="exampleForm.ControlInput1"
             >
-              <Form.Label>Qual o destino?</Form.Label>
+              <Form.Label>Qual o dia?</Form.Label>
               <Form.Control
-                name="cidade"
+                name="dia"
                 onChange={stepOneForm.handleChange}
                 onBlur={stepOneForm.handleBlur}
-                isValid={stepOneForm.touched.cidade && !stepOneForm.errors.cidade}
-                isInvalid={stepOneForm.touched.cidade && stepOneForm.errors.cidade}
+                isValid={stepOneForm.touched.dia && !stepOneForm.errors.dia}
+                isInvalid={stepOneForm.touched.dia && stepOneForm.errors.dia}
                 type="text"
                 placeholder="ex. Paris"
-                value={stepOneForm.values.cidade}
+                value={stepOneForm.values.dia}
               />
-              <Form.Control.Feedback type="invalid">
-                {stepOneForm.errors.cidade}
-              </Form.Control.Feedback>
             </Form.Group>
             <Button
               type="submit"
@@ -143,64 +107,20 @@ const EditDayButton = () => {
           {formStep === 1 && (
             <Form onSubmit={stepTwoForm.handleSubmit}>
               <Form.Group className="mb-3">
-                <Form.Label>Data inicial</Form.Label>
-                <Form.Control
-                  name="dataDeIda"
-                  onChange={stepTwoForm.handleChange}
-                  onBlur={stepTwoForm.handleBlur}
-                  isValid={stepTwoForm.touched.dataDeIda && !stepTwoForm.errors.dataDeIda}
-                  isInvalid={stepTwoForm.touched.dataDeIda && stepTwoForm.errors.dataDeIda}
-                  type="date"
-                  max="2099-12-31"
-                  value={stepTwoForm.values.dataDeIda}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {stepTwoForm.errors.dataDeIda}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label className="mt-3">Data final</Form.Label>
-                <Form.Control
-                  name="dataDeVolta"
-                  onChange={stepTwoForm.handleChange}
-                  onBlur={stepTwoForm.handleBlur}
-                  isValid={stepTwoForm.touched.dataDeVolta && !stepTwoForm.errors.dataDeVolta}
-                  isInvalid={stepTwoForm.touched.dataDeVolta && stepTwoForm.errors.dataDeVolta}
-                  min={stepTwoForm.values.dataDeIda}
-                  max="2099-12-31"
-                  type="date"
-                  value={stepTwoForm.values.dataDeVolta}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {stepTwoForm.errors.dataDeVolta}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Button
-                type="submit"
-                size="lg"
-                className="register-submit-button"
-              >
-                Próximo passo
-              </Button>
-            </Form>
-          )}
-          {formStep === 2 && (
-            <Form onSubmit={stepThreeForm.handleSubmit}>
-              <Form.Group className="mb-3">
                 <Form.Label>Adicione uma descrição</Form.Label>
                 <Form.Control
                   name="description"
-                  onChange={stepThreeForm.handleChange}
-                  onBlur={stepThreeForm.handleBlur}
+                  onChange={stepTwoForm.handleChange}
+                  onBlur={stepTwoForm.handleBlur}
                   isValid={
-                    stepThreeForm.touched.description && !stepThreeForm.errors.description
+                    stepTwoForm.touched.description && !stepTwoForm.errors.description
                   }
                   isInvalid={
-                    stepThreeForm.touched.description && stepThreeForm.errors.description
+                    stepTwoForm.touched.description && stepTwoForm.errors.description
                   }
                   as="textarea"
                   rows={3}
-                  value={stepThreeForm.values.description}
+                  value={stepTwoForm.values.description}
                 />
                 <Form.Control.Feedback type="invalid">
                   {stepThreeForm.errors.description}
@@ -215,13 +135,13 @@ const EditDayButton = () => {
               </Button>
             </Form>
           )}
-          {formStep === 3 && (
-            <Form onSubmit={stepFourForm.handleSubmit}>
+          {formStep === 2 && (
+            <Form onSubmit={stepThreeForm.handleSubmit}>
               <Form.Group controlId="formFile" className="mb-3">
-                <Form.Label>Adicione uma foto de capa</Form.Label>
-                <FileBase name="photo" type="file" multiple={false} value={stepFourForm.values.photo} onDone={({ base64 }) => setPhoto(base64)} />
+                <Form.Label>Adicione uma foto para o seu dia:</Form.Label>
+                <FileBase name="photos" type="file" multiple={false} value={stepThreeForm.values.photos} onDone={({ base64 }) => setPhoto(base64)} />
                 <Form.Control.Feedback type="invalid">
-                  {stepFourForm.errors.photo}
+                  {stepThreeForm.errors.photos}
                 </Form.Control.Feedback>
               </Form.Group>
               <Button

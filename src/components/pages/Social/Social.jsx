@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
 import TravelCard from '../../Card/TravelCard';
 
@@ -12,8 +12,6 @@ const Social = ({ user }) => {
   const [travels, setTravels] = useState([]);
   const [travelsByUser, setTravelsByUser] = useState([]);
   const [teste, setTeste] = useState([]);
-  const username = useParams();
-  console.log(username);
   const getAll = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -26,7 +24,6 @@ const Social = ({ user }) => {
   useEffect(() => {
     getAll();
   }, []);
-
   // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (!travels.length) {
@@ -46,7 +43,6 @@ const Social = ({ user }) => {
     const y = Object.entries(travelsByUser[0]);
     setTeste(y);
   }, [travelsByUser]);
-  console.log(teste);
   const trying = (something) => {
     if (!something.length) {
       console.log('passou dentro do IF');

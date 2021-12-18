@@ -28,7 +28,6 @@ const User = ({ user }) => {
     validationSchema: updateSchema,
     onSubmit: async (formData) => {
       try {
-        console.log(formData);
         const token = localStorage.getItem('token');
         await updateUser(userId, formData, token);
         navigate('/my-travels');
