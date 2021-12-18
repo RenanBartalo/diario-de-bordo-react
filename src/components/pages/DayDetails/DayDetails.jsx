@@ -9,7 +9,9 @@ import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
 import { getOneDay, getOneTravel } from '../../../services/api';
 import './DayDetails.css';
 
-const DayDetails = ({ user, getProjectsByTitle }) => {
+const DayDetails = ({
+  user, getProjectsByTitle, update, setUpdate,
+}) => {
   const [day, setDay] = useState([]);
   const [travel, setTravel] = useState([]);
   const [photoX, setPhoto] = useState('');
@@ -27,7 +29,7 @@ const DayDetails = ({ user, getProjectsByTitle }) => {
   };
   useEffect(() => {
     getDay();
-  }, []);
+  }, [update]);
   const pegarUmaViagemPeloId = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -51,8 +53,18 @@ const DayDetails = ({ user, getProjectsByTitle }) => {
     return (
       <div className="row">
         <div className="col-md-6 d-flex">
-          <EditDayButton day={day} travel={travel} />
-          <DeleteDayButton x={dayId} className="ms-3" />
+          <EditDayButton
+            day={day}
+            travel={travel}
+            setUpdate={setUpdate}
+            update={update}
+          />
+          <DeleteDayButton
+            x={dayId}
+            className="ms-3"
+            setUpdate={setUpdate}
+            update={update}
+          />
         </div>
       </div>
     );
@@ -89,7 +101,11 @@ const DayDetails = ({ user, getProjectsByTitle }) => {
         <div className="row">
           <div className="col-12 py-4">
             <h2>Detalhes do dia:</h2>
-            <p>{day.dia}</p>
+            <p>
+              Dia -
+              {' '}
+              {day.dia}
+            </p>
             <p>{day.description}</p>
           </div>
         </div>

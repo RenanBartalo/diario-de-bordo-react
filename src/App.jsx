@@ -119,6 +119,8 @@ const App = () => {
             Page={DayDetails}
             getProjectsByTitle={getProjectsByTitle}
             user={user}
+            setUpdate={setUpdate}
+            update={update}
           />
         )}
       />
