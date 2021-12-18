@@ -6,16 +6,16 @@ import Modal from 'react-bootstrap/Modal';
 
 import { deleteOneTravel } from '../../services/api';
 
-const DeleteTravelButton = (x) => {
+const DeleteTravelButton = ({ x, setUpdate, update }) => {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const travelId = Object.values(x);
   const deleteOneTravelById = async () => {
     try {
       const token = localStorage.getItem('token');
-      await deleteOneTravel(travelId[0], token);
+      await deleteOneTravel(x, token);
+      await setUpdate(!update);
       navigate(-1);
     } catch (err) {
       console.log(err);

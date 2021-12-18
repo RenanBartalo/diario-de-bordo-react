@@ -50,7 +50,6 @@ const EditDayButton = ({ day }) => {
     },
     onSubmit: async (formData) => {
       try {
-        console.log(formData);
         const data = {
           ...stepOneForm.values,
           ...stepTwoForm.values,

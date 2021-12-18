@@ -11,12 +11,13 @@ import { createOneTravel, createOneDay } from '../../services/api';
 
 import './new-trip-button.css';
 
-const NewTripButton = () => {
+const NewTripButton = ({ setUpdate, update }) => {
   const [show, setShow] = useState(false);
   const [photoX, setPhoto] = useState('');
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  console.log(setUpdate);
+  console.log(update);
   const [formStep, setFormStep] = useState(0);
 
   useEffect(() => {
@@ -96,11 +97,9 @@ const NewTripButton = () => {
     return numberDays;
   };
   function insertOneDay(objTravel, oToken) {
-    console.log(objTravel);
     for (let i = 0; i <= objTravel.numDays; i += 1) {
       const x = { dia: i, description: 'coloque aqui sua descrição!!!!' };
       createOneDay(objTravel._id, x, oToken);
-      console.log('está com loop?');
     }
   }
   const stepFourForm = useFormik({
@@ -111,7 +110,6 @@ const NewTripButton = () => {
     onSubmit: async (formData) => {
       try {
         const numDays = 0;
-        console.log(formData);
         const data = {
           ...stepOneForm.values,
           ...stepTwoForm.values,
@@ -127,6 +125,7 @@ const NewTripButton = () => {
 
         const testeCatch = await createOneTravel(data, token);
         await insertOneDay(testeCatch, token);
+        setUpdate(!update);
         handleClose();
       } catch (error) {
         console.log(error);

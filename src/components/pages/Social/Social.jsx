@@ -45,12 +45,11 @@ const Social = ({ user }) => {
   }, [travelsByUser]);
   const trying = (something) => {
     if (!something.length) {
-      console.log('passou dentro do IF');
       return undefined;
     }
 
     return (
-      something.map((whatever) => (
+      something.reverse().map((whatever) => (
         <TravelCard props={whatever} />
       ))
     );
