@@ -29,7 +29,7 @@ const TravelDetails = ({
   useEffect(() => {
     pegarUmaViagemPeloId();
     getProjectsByTitle();
-  }, []);
+  }, [update]);
   const showEdit = (trueOrFalse) => {
     if (!trueOrFalse) {
       return undefined;

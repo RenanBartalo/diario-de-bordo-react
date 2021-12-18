@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import FileBase from 'react-file-base64';
 
@@ -13,7 +12,6 @@ import { editOneTravel } from '../../services/api';
 const EditTravelButton = ({
   x, travel, setUpdate, update,
 }) => {
-  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -120,8 +118,8 @@ const EditTravelButton = ({
         const token = localStorage.getItem('token');
 
         await editOneTravel(data, travelId, token);
+        handleClose();
         await setUpdate(!update);
-        navigate(-1);
       } catch (error) {
         console.log(error);
       }

@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import FileBase from 'react-file-base64';
 
@@ -9,9 +8,8 @@ import { useFormik } from 'formik';
 
 import { editOneDay } from '../../services/api';
 
-const EditDayButton = ({ day }) => {
+const EditDayButton = ({ day, update, setUpdate }) => {
   const dayId = day._id;
-  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -59,8 +57,8 @@ const EditDayButton = ({ day }) => {
         const token = localStorage.getItem('token');
 
         await editOneDay(data, dayId, token);
-
-        navigate(-1);
+        handleClose();
+        await setUpdate(!update);
       } catch (error) {
         console.log(error);
       }
