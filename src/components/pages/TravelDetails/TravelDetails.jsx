@@ -49,7 +49,7 @@ const TravelDetails = ({
             setUpdate={setUpdate}
             update={update}
           />
-      </div>
+        </div>
       </div>
     );
   };
