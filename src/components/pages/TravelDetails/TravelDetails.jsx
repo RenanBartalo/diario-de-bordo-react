@@ -36,22 +36,20 @@ const TravelDetails = ({
     }
     return (
       <div className="row">
-        <div className="col-md-6 align-self-center">
-          <div className="buttons-container">
-            <EditTravelButton
-              x={travelId}
-              travel={travel}
-              setUpdate={setUpdate}
-              update={update}
-            />
-            <DeleteTravelButton
-              x={travelId}
-              className="mx-3"
-              setUpdate={setUpdate}
-              update={update}
-            />
-          </div>
-        </div>
+        <div className="col-md-6 d-flex">
+          <EditTravelButton
+            x={travelId}
+            travel={travel}
+            setUpdate={setUpdate}
+            update={update}
+          />
+          <DeleteTravelButton
+            x={travelId}
+            className="ms-3"
+            setUpdate={setUpdate}
+            update={update}
+          />
+      </div>
       </div>
     );
   };

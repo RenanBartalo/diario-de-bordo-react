@@ -86,8 +86,8 @@ const Login = ({ loginUser }) => {
               <Button type="submit" size="lg" className="login-submit-button">Login</Button>
             </Form>
             <p className="text-center mt-3 mb-0">
-              Ainda não tem uma conta?
-              <Link to="/register"> Cadastre-se</Link>
+              Ainda não tem uma conta? {' '}
+              <Link to="/register">Cadastre-se</Link>
             </p>
           </div>
         </div>
