@@ -45,7 +45,6 @@ const Social = ({ user }) => {
   }, [travelsByUser]);
   const trying = (something) => {
     if (!something.length) {
-      console.log('passou dentro do IF');
       return undefined;
     }
 
@@ -61,7 +60,7 @@ const Social = ({ user }) => {
         <p>
           <div className="container">
             <div className="row d-flex justify-content-between">
-              <div className="col-12 d-flex justify-content-between align-items-center">
+              <div className="col-12 py-3 d-flex justify-content-between align-items-center">
                 <Link to="/my-travels" className="home-link">
                   <div className="d-flex align-items-center">
                     <div
@@ -82,9 +81,9 @@ const Social = ({ user }) => {
                 </Link>
               </div>
             </div>
-          </div>
-          <div className="row">
-            {trying(x[1].slice(0, 3))}
+            <div className="row">
+              {trying(x[1].slice(0, 3))}
+            </div>
           </div>
         </p>
       ))}

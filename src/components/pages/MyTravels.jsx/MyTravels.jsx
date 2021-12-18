@@ -6,10 +6,12 @@ import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
 import ItinerariesHeader from '../../ItinerariesHeader/ItinerariesHeader';
 import TravelCard from '../../Card/TravelCard';
 
-const MyTravels = ({ projects, user }) => {
+const MyTravels = ({
+  projects, user, setUpdate, update,
+}) => {
   return (
     <TemplatePrivate user={user}>
-      <ItinerariesHeader />
+      <ItinerariesHeader setUpdate={setUpdate} update={update} />
       <div className="container">
         <div className="row">
           {projects.map((travel) => (

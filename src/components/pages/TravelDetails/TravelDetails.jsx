@@ -10,18 +10,14 @@ import DeleteTravelButton from '../../DeleteTravelButton/DeleteTravelButton';
 import { getOneTravel } from '../../../services/api';
 import './TravelDetails.css';
 
-const TravelDetails = ({ user }) => {
+const TravelDetails = ({ user, setUpdate, update }) => {
   const { travelId } = useParams();
   const [travel, setTravel] = useState({});
   const [myUser, setMyUser] = useState(false);
-  console.log(travel);
-  console.log(user);
-  console.log(myUser);
   const pegarUmaViagemPeloId = async () => {
     try {
       const token = localStorage.getItem('token');
       const foundTravel = await getOneTravel(travelId, token);
-      console.log(user);
       setTravel(foundTravel);
       setMyUser(foundTravel.owner === user.userId);
     } catch (error) {
@@ -31,7 +27,6 @@ const TravelDetails = ({ user }) => {
   useEffect(() => {
     pegarUmaViagemPeloId();
   }, []);
-
   const showEdit = (trueOrFalse) => {
     if (!trueOrFalse) {
       return undefined;
@@ -43,10 +38,14 @@ const TravelDetails = ({ user }) => {
             <EditTravelButton
               x={travelId}
               travel={travel}
+              setUpdate={setUpdate}
+              update={update}
             />
             <DeleteTravelButton
               x={travelId}
               className="mx-3"
+              setUpdate={setUpdate}
+              update={update}
             />
           </div>
         </div>
@@ -58,7 +57,10 @@ const TravelDetails = ({ user }) => {
     <TemplatePrivate user={user}>
       <section
         className="container-fluid details-container"
-        style={{ backgroundImage: `url(${travel.photo})` }}
+        style={{
+          backgroundImage: `url(${travel.photo})`,
+          backgroundSize: 'cover',
+        }}
       >
         <div className="details-inner d-flex align-items-end">
           <div className="container">

@@ -22,7 +22,8 @@ import { getTravels } from './services/api';
 
 const App = () => {
   const [projects, setProjects] = useState([]);
-  const searchTitle = '';
+  const searchTitle = ' ';
+  const [update, setUpdate] = useState(false);
   const [user, setUser] = useState({
     name: '',
     roteiros: '0',
@@ -49,8 +50,7 @@ const App = () => {
   };
   useEffect(() => {
     getProjectsByTitle();
-  }, [searchTitle]);
-  console.log(user);
+  }, [searchTitle, update]);
   const verifyLoggedUser = () => {
     const token = localStorage.getItem('token');
 
@@ -77,6 +77,8 @@ const App = () => {
             setUser={setUser}
             user={user}
             projects={projects}
+            setUpdate={setUpdate}
+            update={update}
           />
 )}
       />
@@ -94,7 +96,15 @@ const App = () => {
 
       <Route
         path="/my-travels/:travelId"
-        element={<ProtectedRoute isLogged={isUserLogged} Page={TravelDetails} user={user} />}
+        element={(
+          <ProtectedRoute
+            isLogged={isUserLogged}
+            Page={TravelDetails}
+            user={user}
+            setUpdate={setUpdate}
+            update={update}
+          />
+      )}
       />
       <Route
         path="/detail/:dayId"

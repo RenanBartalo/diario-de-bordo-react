@@ -31,7 +31,6 @@ const DayDetails = ({ user }) => {
   const pegarUmaViagemPeloId = async () => {
     try {
       const token = localStorage.getItem('token');
-      console.log(day.travel);
       const travelId = day.travel;
       const foundTravel = await getOneTravel(travelId, token);
       setTravel(foundTravel);
@@ -48,7 +47,6 @@ const DayDetails = ({ user }) => {
     if (!trueOrFalse) {
       return undefined;
     }
-    console.log(myUser);
     return (
       <div className="row">
         <div className="col-md-6 align-self-center">
@@ -64,7 +62,7 @@ const DayDetails = ({ user }) => {
     <TemplatePrivate user={user}>
       <section
         className="container-fluid details-container"
-        style={{ backgroundImage: `url(${photoX})` }}
+        style={{ backgroundImage: `url(${photoX})`, backgroundSize: 'cover' }}
       >
         <div className="details-inner d-flex align-items-end">
           <div className="container">

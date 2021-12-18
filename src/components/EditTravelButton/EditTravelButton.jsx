@@ -10,7 +10,9 @@ import * as yup from 'yup';
 
 import { editOneTravel } from '../../services/api';
 
-const EditTravelButton = ({ x, travel }) => {
+const EditTravelButton = ({
+  x, travel, setUpdate, update,
+}) => {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -104,7 +106,6 @@ const EditTravelButton = ({ x, travel }) => {
     onSubmit: async (formData) => {
       try {
         const numDays = 0;
-        console.log(formData);
         const data = {
           ...stepOneForm.values,
           ...stepTwoForm.values,
@@ -119,7 +120,7 @@ const EditTravelButton = ({ x, travel }) => {
         const token = localStorage.getItem('token');
 
         await editOneTravel(data, travelId, token);
-
+        await setUpdate(!update);
         navigate(-1);
       } catch (error) {
         console.log(error);

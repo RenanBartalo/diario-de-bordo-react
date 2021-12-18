@@ -3,7 +3,7 @@ import NewTripButton from '../NewTripButton/NewTripButton';
 
 import './itineraries-header.css';
 
-const ItinerariesHeader = () => {
+const ItinerariesHeader = ({ setUpdate, update }) => {
   return (
     <div className="container py-3">
       <div className="row d-flex justify-content-between">
@@ -12,7 +12,7 @@ const ItinerariesHeader = () => {
             <span className="my-trips">Meus roteiros</span>
           </div>
           <div>
-            <NewTripButton />
+            <NewTripButton setUpdate={setUpdate} update={update} />
           </div>
         </div>
       </div>
