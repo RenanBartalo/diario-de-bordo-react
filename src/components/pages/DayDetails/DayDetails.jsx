@@ -9,7 +9,7 @@ import TemplatePrivate from '../../templates/TemplatePrivate/TemplatePrivate';
 import { getOneDay, getOneTravel } from '../../../services/api';
 import './DayDetails.css';
 
-const DayDetails = ({ user }) => {
+const DayDetails = ({ user, getProjectsByTitle }) => {
   const [day, setDay] = useState([]);
   const [travel, setTravel] = useState([]);
   const [photoX, setPhoto] = useState('');
@@ -34,7 +34,7 @@ const DayDetails = ({ user }) => {
       const travelId = day.travel;
       const foundTravel = await getOneTravel(travelId, token);
       setTravel(foundTravel);
-      setPhoto(day.photos[0]);
+      setPhoto(day.photos[0] ? day.photos[0] : 'https://rotasdeviagem.com.br/wp-content/uploads/2019/06/praia-dos-artistas-natal-rn.jpg');
       setMyUser(foundTravel.owner === user.userId);
     } catch (error) {
       console.log(error);
@@ -42,6 +42,7 @@ const DayDetails = ({ user }) => {
   };
   useEffect(() => {
     pegarUmaViagemPeloId();
+    getProjectsByTitle();
   }, [day]);
   const showEdit = (trueOrFalse) => {
     if (!trueOrFalse) {

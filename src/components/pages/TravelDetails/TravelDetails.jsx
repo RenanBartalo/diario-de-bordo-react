@@ -10,7 +10,9 @@ import DeleteTravelButton from '../../DeleteTravelButton/DeleteTravelButton';
 import { getOneTravel } from '../../../services/api';
 import './TravelDetails.css';
 
-const TravelDetails = ({ user, setUpdate, update }) => {
+const TravelDetails = ({
+  user, setUpdate, update, getProjectsByTitle,
+}) => {
   const { travelId } = useParams();
   const [travel, setTravel] = useState({});
   const [myUser, setMyUser] = useState(false);
@@ -26,6 +28,7 @@ const TravelDetails = ({ user, setUpdate, update }) => {
   };
   useEffect(() => {
     pegarUmaViagemPeloId();
+    getProjectsByTitle();
   }, []);
   const showEdit = (trueOrFalse) => {
     if (!trueOrFalse) {

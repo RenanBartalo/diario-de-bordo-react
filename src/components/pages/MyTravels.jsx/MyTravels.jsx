@@ -16,13 +16,12 @@ const MyTravels = ({
   useEffect(() => {
     getProjectsByTitle();
   }, [update]);
-  console.log(projects);
   return (
     <TemplatePrivate user={user}>
       <ItinerariesHeader setUpdate={setUpdate} update={update} />
       <div className="container">
         <div className="row">
-          {projects.reverse().map((travel) => (
+          {projects.map((travel) => (
             <TravelCard props={travel} />
           ))}
         </div>

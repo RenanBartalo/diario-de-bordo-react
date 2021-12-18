@@ -65,7 +65,6 @@ const App = () => {
       console.log(error);
     }
   };
-  console.log(projects);
   return (
     <Routes>
       <Route path="/" element={<Login loginUser={loginUser} />} />
@@ -89,9 +88,14 @@ const App = () => {
 
       <Route
         path="/social"
-        element={
-          <ProtectedRoute isLogged={isUserLogged} Page={Social} user={user} />
-        }
+        element={(
+          <ProtectedRoute
+            isLogged={isUserLogged}
+            getProjectsByTitle={getProjectsByTitle}
+            Page={Social}
+            user={user}
+          />
+        )}
       />
 
       <Route
@@ -101,6 +105,7 @@ const App = () => {
             isLogged={isUserLogged}
             Page={TravelDetails}
             user={user}
+            getProjectsByTitle={getProjectsByTitle}
             setUpdate={setUpdate}
             update={update}
           />
@@ -112,15 +117,21 @@ const App = () => {
           <ProtectedRoute
             isLogged={isUserLogged}
             Page={DayDetails}
+            getProjectsByTitle={getProjectsByTitle}
             user={user}
           />
         )}
       />
       <Route
         path="/user/:userId"
-        element={
-          <ProtectedRoute isLogged={isUserLogged} Page={User} user={user} />
-        }
+        element={(
+          <ProtectedRoute
+            isLogged={isUserLogged}
+            getProjectsByTitle={getProjectsByTitle}
+            Page={User}
+            user={user}
+          />
+        )}
       />
     </Routes>
   );

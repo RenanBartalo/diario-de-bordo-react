@@ -11,7 +11,7 @@ import { updateUser } from '../../../services/api';
 
 import './User.css';
 
-const User = ({ user }) => {
+const User = ({ user, getProjectsByTitle }) => {
   const [photoX, setPhoto] = useState(user.photo);
   const navigate = useNavigate();
   const { userId } = useParams();
@@ -20,6 +20,7 @@ const User = ({ user }) => {
     email: yup.string().required('Campo obrigatório').email('Must have email format'),
     photo: yup.string(),
   });
+  getProjectsByTitle();
   const {
     values, touched, errors, handleChange, handleBlur, handleSubmit, setErrors,
   } = useFormik({
