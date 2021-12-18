@@ -16,8 +16,6 @@ const NewTripButton = ({ setUpdate, update }) => {
   const [photoX, setPhoto] = useState('');
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  console.log(setUpdate);
-  console.log(update);
   const [formStep, setFormStep] = useState(0);
 
   useEffect(() => {

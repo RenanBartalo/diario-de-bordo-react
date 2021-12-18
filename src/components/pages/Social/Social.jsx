@@ -8,7 +8,7 @@ import TravelCard from '../../Card/TravelCard';
 
 import { getAllToSocial } from '../../../services/api';
 
-const Social = ({ user }) => {
+const Social = ({ user, getProjectsByTitle }) => {
   const [travels, setTravels] = useState([]);
   const [travelsByUser, setTravelsByUser] = useState([]);
   const [teste, setTeste] = useState([]);
@@ -23,6 +23,7 @@ const Social = ({ user }) => {
   };
   useEffect(() => {
     getAll();
+    getProjectsByTitle();
   }, []);
   // eslint-disable-next-line consistent-return
   useEffect(() => {
@@ -49,7 +50,7 @@ const Social = ({ user }) => {
     }
 
     return (
-      something.reverse().map((whatever) => (
+      something.map((whatever) => (
         <TravelCard props={whatever} />
       ))
     );
@@ -82,7 +83,7 @@ const Social = ({ user }) => {
               </div>
             </div>
             <div className="row">
-              {trying(x[1].slice(0, 3))}
+              {trying(x[1].reverse().slice(0, 3))}
             </div>
           </div>
         </p>
