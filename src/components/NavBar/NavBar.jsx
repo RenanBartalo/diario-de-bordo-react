@@ -5,11 +5,12 @@ import React from 'react';
 import bootstrap from 'bootstrap';
 import { Link } from 'react-router-dom';
 import './navbar.css';
+import defaultPhoto from '../../images/userStandart.jpeg';
 
 const NavBar = ({ ...props }) => {
   const theName = props.name;
   const theNumber = props.roteiros;
-  const thePhoto = props.photo;
+  const thePhoto = props.photo ? props.photo : defaultPhoto;
   const theId = props.id;
   return (
     <div className="nav-bg">

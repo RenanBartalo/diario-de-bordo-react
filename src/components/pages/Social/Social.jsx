@@ -56,35 +56,37 @@ const Social = ({ user, getProjectsByTitle }) => {
   };
   return (
     <TemplatePrivate user={user}>
-      {teste.map((x) => (
-        <p>
-          <div className="container">
-            <div className="row d-flex justify-content-between">
-              <div className="col-12 py-3 d-flex justify-content-between align-items-center">
-                <div className="d-flex align-items-center">
-                  <div
-                    className="user-picture"
-                    style={{
-                      backgroundImage: `url(${x[1][0].owner.photo})`,
-                    }}
-                  />
-                  <div className="user-info">
-                    <span className="name">{x[0]}</span>
-                    <br />
-                    {' '}
-                    {x[1].length}
-                    {' '}
-                    roteiros
+      <div className="pt-3">
+        {teste.map((x) => (
+          <p>
+            <div className="container">
+              <div className="row d-flex justify-content-between">
+                <div className="col-12 py-3 d-flex justify-content-between align-items-center">
+                  <div className="d-flex align-items-center">
+                    <div
+                      className="user-picture"
+                      style={{
+                        backgroundImage: `url(${x[1][0].owner.photo})`,
+                      }}
+                    />
+                    <div className="user-info">
+                      <span className="name">{x[0]}</span>
+                      <br />
+                      {' '}
+                      {x[1].length}
+                      {' '}
+                      roteiros
+                    </div>
                   </div>
                 </div>
               </div>
+              <div className="row">
+                {trying(x[1].reverse().slice(0, 3))}
+              </div>
             </div>
-            <div className="row">
-              {trying(x[1].reverse().slice(0, 3))}
-            </div>
-          </div>
-        </p>
-      ))}
+          </p>
+        ))}
+      </div>
     </TemplatePrivate>
   );
 };
