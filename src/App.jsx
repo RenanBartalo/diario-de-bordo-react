@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-console */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import './App.css';
@@ -21,9 +21,21 @@ import ProtectedRoute from './components/miscelaneous/ProtectedRoute/ProtectedRo
 import { getTravels } from './services/api';
 
 const App = () => {
+  const verifyLoggedUser = () => {
+    const token = localStorage.getItem('token');
+
+    return !!token;
+  };
+
+  const [isUserLogged, setIsUserLogged] = useState(verifyLoggedUser());
+
+  const loginUser = () => {
+    setIsUserLogged(true);
+  };
   const [projects, setProjects] = useState([]);
-  const searchTitle = ' ';
   const [update, setUpdate] = useState(false);
+  const searchTitle = '';
+
   const [user, setUser] = useState({
     name: '',
     roteiros: '0',
@@ -42,27 +54,18 @@ const App = () => {
       const userIdX = foundProjects.user._id;
       const emailX = foundProjects.user.email;
       setUser({
-        ...user, name: userX, roteiros: roteirosX, photo: photoX, userId: userIdX, email: emailX,
+        ...user,
+        name: userX,
+        roteiros: roteirosX,
+        photo: photoX,
+        userId: userIdX,
+        email: emailX,
       });
     } catch (error) {
       console.log(error);
     }
   };
-  useEffect(() => {
-    getProjectsByTitle();
-  }, [searchTitle, update]);
-  const verifyLoggedUser = () => {
-    const token = localStorage.getItem('token');
-
-    return !!token;
-  };
-
-  const [isUserLogged, setIsUserLogged] = useState(verifyLoggedUser());
-
-  const loginUser = () => {
-    setIsUserLogged(true);
-  };
-
+  console.log(projects);
   return (
     <Routes>
       <Route path="/" element={<Login loginUser={loginUser} />} />
@@ -75,23 +78,20 @@ const App = () => {
             isLogged={isUserLogged}
             Page={MyTravels}
             setUser={setUser}
+            getProjectsByTitle={getProjectsByTitle}
             user={user}
             projects={projects}
             setUpdate={setUpdate}
             update={update}
           />
-)}
+        )}
       />
 
       <Route
         path="/social"
-        element={(
-          <ProtectedRoute
-            isLogged={isUserLogged}
-            Page={Social}
-            user={user}
-          />
-)}
+        element={
+          <ProtectedRoute isLogged={isUserLogged} Page={Social} user={user} />
+        }
       />
 
       <Route
@@ -104,15 +104,23 @@ const App = () => {
             setUpdate={setUpdate}
             update={update}
           />
-      )}
+        )}
       />
       <Route
         path="/detail/:dayId"
-        element={<ProtectedRoute isLogged={isUserLogged} Page={DayDetails} user={user} />}
+        element={(
+          <ProtectedRoute
+            isLogged={isUserLogged}
+            Page={DayDetails}
+            user={user}
+          />
+        )}
       />
       <Route
         path="/user/:userId"
-        element={<ProtectedRoute isLogged={isUserLogged} Page={User} user={user} />}
+        element={
+          <ProtectedRoute isLogged={isUserLogged} Page={User} user={user} />
+        }
       />
     </Routes>
   );

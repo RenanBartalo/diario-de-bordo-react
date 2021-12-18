@@ -49,7 +49,7 @@ const Social = ({ user }) => {
     }
 
     return (
-      something.map((whatever) => (
+      something.reverse().map((whatever) => (
         <TravelCard props={whatever} />
       ))
     );
