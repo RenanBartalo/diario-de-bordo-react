@@ -11,7 +11,6 @@ const NavBar = ({ ...props }) => {
   const theNumber = props.roteiros;
   const thePhoto = props.photo;
   const theId = props.id;
-  console.log(theId);
   return (
     <div className="nav-bg">
       <nav className="py-3 hide">

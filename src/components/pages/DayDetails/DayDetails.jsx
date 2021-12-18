@@ -50,11 +50,9 @@ const DayDetails = ({ user, getProjectsByTitle }) => {
     }
     return (
       <div className="row">
-        <div className="col-md-6 align-self-center">
-          <div className="buttons-container">
-            <EditDayButton day={day} travel={travel} />
-            <DeleteDayButton x={dayId} className="mx-3" />
-          </div>
+        <div className="col-md-6 d-flex">
+          <EditDayButton day={day} travel={travel} />
+          <DeleteDayButton x={dayId} className="ms-3" />
         </div>
       </div>
     );

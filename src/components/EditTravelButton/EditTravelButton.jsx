@@ -10,7 +10,9 @@ import * as yup from 'yup';
 
 import { editOneTravel } from '../../services/api';
 
-const EditTravelButton = ({ x, travel }) => {
+const EditTravelButton = ({
+  x, travel, setUpdate, update,
+}) => {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -23,7 +25,6 @@ const EditTravelButton = ({ x, travel }) => {
       setFormStep(0);
     }, 500);
   }, [show]);
-  console.log(travel);
   const stepOneSchema = yup.object().shape({
     cidade: yup
       .string()
@@ -97,10 +98,6 @@ const EditTravelButton = ({ x, travel }) => {
 
     return numberDays;
   };
-  console.log(stepOneForm.values);
-  console.log(stepTwoForm.values);
-  console.log(stepThreeForm.values);
-  console.log(photoX);
   const stepFourForm = useFormik({
     initialValues: {
       photo: photoX,
@@ -109,7 +106,6 @@ const EditTravelButton = ({ x, travel }) => {
     onSubmit: async (formData) => {
       try {
         const numDays = 0;
-        console.log(formData);
         const data = {
           ...stepOneForm.values,
           ...stepTwoForm.values,
@@ -124,7 +120,7 @@ const EditTravelButton = ({ x, travel }) => {
         const token = localStorage.getItem('token');
 
         await editOneTravel(data, travelId, token);
-
+        await setUpdate(!update);
         navigate(-1);
       } catch (error) {
         console.log(error);

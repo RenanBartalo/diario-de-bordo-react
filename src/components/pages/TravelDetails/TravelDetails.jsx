@@ -10,23 +10,50 @@ import DeleteTravelButton from '../../DeleteTravelButton/DeleteTravelButton';
 import { getOneTravel } from '../../../services/api';
 import './TravelDetails.css';
 
-const TravelDetails = ({ user }) => {
+const TravelDetails = ({
+  user, setUpdate, update, getProjectsByTitle,
+}) => {
   const { travelId } = useParams();
-  console.log(travelId);
   const [travel, setTravel] = useState({});
+  const [myUser, setMyUser] = useState(false);
   const pegarUmaViagemPeloId = async () => {
     try {
       const token = localStorage.getItem('token');
       const foundTravel = await getOneTravel(travelId, token);
-      console.log(user);
       setTravel(foundTravel);
+      setMyUser(foundTravel.owner === user.userId);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
     pegarUmaViagemPeloId();
+    getProjectsByTitle();
   }, []);
+  const showEdit = (trueOrFalse) => {
+    if (!trueOrFalse) {
+      return undefined;
+    }
+    return (
+      <div className="row">
+        <div className="col-md-6 d-flex">
+          <EditTravelButton
+            x={travelId}
+            travel={travel}
+            setUpdate={setUpdate}
+            update={update}
+          />
+          <DeleteTravelButton
+            x={travelId}
+            className="ms-3"
+            setUpdate={setUpdate}
+            update={update}
+          />
+      </div>
+      </div>
+    );
+  };
+
   return (
     <TemplatePrivate user={user}>
       <section
@@ -53,14 +80,7 @@ const TravelDetails = ({ user }) => {
               </div>
               <div className="col-md-6 align-self-center">
                 <div className="buttons-container">
-                  <EditTravelButton
-                    x={travelId}
-                    travel={travel}
-                  />
-                  <DeleteTravelButton
-                    x={travelId}
-                    className="mx-3"
-                  />
+                  {showEdit(myUser)}
                 </div>
               </div>
             </div>
