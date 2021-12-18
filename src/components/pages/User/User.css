@@ -1,0 +1,14 @@
+.user-submit-button {
+    background-color: #5A55F3;
+    border: none
+  }
+  
+  .user-submit-button:hover {
+    background-color: #413bba;
+    border: none
+  }
+  
+  .user-submit-button:focus {
+    background-color: #413bba;
+    border: none
+  }

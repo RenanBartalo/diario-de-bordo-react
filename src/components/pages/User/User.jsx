@@ -11,7 +11,7 @@ import { updateUser } from '../../../services/api';
 
 import './User.css';
 
-const User = ({ user, getProjectsByTitle }) => {
+const User = ({ user }) => {
   const [photoX, setPhoto] = useState(user.photo);
   const navigate = useNavigate();
   const { userId } = useParams();
@@ -20,7 +20,6 @@ const User = ({ user, getProjectsByTitle }) => {
     email: yup.string().required('Campo obrigatório').email('Must have email format'),
     photo: yup.string(),
   });
-  getProjectsByTitle();
   const {
     values, touched, errors, handleChange, handleBlur, handleSubmit, setErrors,
   } = useFormik({
@@ -84,7 +83,7 @@ const User = ({ user, getProjectsByTitle }) => {
                 onDone={({ base64 }) => setPhoto(base64)}
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button className="user-submit-button" type="submit">
               Alterar
             </Button>
           </Form>
