@@ -1,7 +1,9 @@
 .template-public-container {
-  background-color: #000;
+  background-image: url(https://prod-virtuoso.dotcmscloud.com/dA/188da7ea-f44f-4b9c-92f9-6a65064021c1/heroImage1/PowerfulReasons_hero.jpg);
   width: 100vw;
   height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .container-public {

@@ -27,7 +27,9 @@ const TravelCard = ({ ...props }) => {
             <h5 className="title">{cidade}</h5>
             <p>
               {numDays}
+              {' '}
               dias -
+              {' '}
               {dataDeIda}
               {' '}
               a
