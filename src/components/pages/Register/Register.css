@@ -6,5 +6,16 @@
 .register-submit-button {
   width: 100%;
   margin-top: 30px;
-  background-color: #000FFF;
+  background-color: #5A55F3;
+  border: none
+}
+
+.register-submit-button:hover {
+  background-color: #413bba;
+  border: none
+}
+
+.register-submit-button:focus {
+  background-color: #413bba;
+  border: none
 }

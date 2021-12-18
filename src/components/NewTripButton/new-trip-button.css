@@ -9,3 +9,7 @@
     line-height: 15px;
     border: none;
 }
+
+.new-trip-button:hover {
+    background-color: #413bba;
+}
